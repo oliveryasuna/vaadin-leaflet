@@ -70,7 +70,20 @@ public interface StoredLeafletPojo extends LeafletPojo {
 
   @Override
   default CompletableFuture<?> callJsFunction(final Class<?> returnType, final String functionName, final String rawArguments) {
-    return null;
+    final String expression = FrontendUtils.buildJsFunctionCall(
+        FrontendUtils.buildJsPropertyAccessor(FrontendUtils.JsPropertyAccessorNotation.DOT,
+            buildClientSideGetExpression(this),
+            functionName),
+        rawArguments);
+
+    final PendingJavaScriptResult result = getUi().getPage().executeJs(expression);
+
+    // TODO: Report invalid inspection to JetBrains.
+    if(returnType != null) {
+      return result.toCompletableFuture(returnType);
+    } else {
+      return result.toCompletableFuture(Void.class);
+    }
   }
 
   @Override

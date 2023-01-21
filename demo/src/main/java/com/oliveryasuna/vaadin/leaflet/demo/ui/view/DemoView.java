@@ -46,14 +46,8 @@ public class DemoView extends Composite<VerticalLayout> {
 
     Leaflet.getInstance().map(UI.getCurrent(), "map")
         .thenAccept(map -> map.setView(new LLatLngTuple(51.505, -0.09), 13)
-            .thenRun(() -> map.getUi().getPage().executeJs("" +
-                "L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {\n" +
-                "    maxZoom: 19,\n" +
-                "    attribution: '&copy; <a href=\"http://www.openstreetmap.org/copyright\">OpenStreetMap</a>'\n" +
-                "}).addTo(window.LeafletAddon.maps[0]);"
-            )));
-//            .thenAccept(map2 -> Leaflet.getInstance().tileLayer(UI.getCurrent(), "https://tile.openstreetmap.org/{z}/{x}/{y}.png")
-//                .thenAccept(tileLayer -> tileLayer.addTo(map2))));
+            .thenAccept(map2 -> Leaflet.getInstance().tileLayer(map2.getUi(), "https://tile.openstreetmap.org/{z}/{x}/{y}.png")
+                .thenAccept(tileLayer -> tileLayer.addTo(map2))));
 
     final VerticalLayout content = new VerticalLayout();
     content.add(new HorizontalLayout(controls()));
