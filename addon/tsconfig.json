@@ -1,0 +1,44 @@
+{
+  "include": [
+    "./src/main/resources/META-INF/resources/frontend/src/**/*.ts"
+  ],
+  "compilerOptions": {
+    // Type checking
+    //--------------------------------------------------
+
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+    "alwaysStrict": true,
+    "exactOptionalPropertyTypes": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noUncheckedIndexedAccess": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "strict": true,
+    "strictBindCallApply": true,
+    "strictFunctionTypes": true,
+    "strictNullChecks": true,
+    "strictPropertyInitialization": true,
+    "useUnknownInCatchVariables": true,
+
+    // Modules
+    //--------------------------------------------------
+
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "rootDir": "./src/main/resources/META-INF/resources/frontend/src",
+
+    // Language and environment
+    //--------------------------------------------------
+
+    "lib": [
+      "ESNext",
+      "DOM"
+    ]
+  }
+}
