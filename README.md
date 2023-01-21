@@ -11,7 +11,6 @@
 * Vaadin 14 or newer
   * Tested on Vaadin 15+.
   * Vaadin 14 should work with a TypeScript Webpack loader (e.g., [ts-loader](https://github.com/TypeStrong/ts-loader)).
-* 
 
 [//]: # (TODO: Basic usage.)
 
