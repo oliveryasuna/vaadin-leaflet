@@ -65,7 +65,6 @@ public class LTileLayer extends AbstractLGridLayer<LTileLayer> {
 
   // TODO: JavaScript methods.
 
-
   @Override
   public String getStorageAccessorFunctionName() {
     return "getTileLayer";
