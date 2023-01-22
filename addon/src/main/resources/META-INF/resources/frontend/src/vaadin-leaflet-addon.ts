@@ -20,7 +20,7 @@ import * as L from 'leaflet';
 import {addGridLayer, getGridLayer} from './leaflet-grid-layer';
 import {addMap, getMap} from './leaflet-map';
 import {addTileLayer, getTileLayer} from './leaflet-tile-layer';
-import {addLatLng, getLatLng} from './leaflet-latlng';
+import {addLatLng, getLatLng} from './leaflet-lat-lng';
 
 interface LeafletAddon {
   support: {
