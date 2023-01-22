@@ -34,7 +34,7 @@ import com.vaadin.flow.router.Route;
 @Route("")
 @JsModule("leaflet/dist/leaflet.js")
 @CssImport("leaflet/dist/leaflet.css")
-@JsModule("./src/leaflet-bootstrap.ts")
+@JsModule("./src/vaadin-leaflet-addon.ts")
 public class DemoView extends Composite<VerticalLayout> {
 
   @Override
