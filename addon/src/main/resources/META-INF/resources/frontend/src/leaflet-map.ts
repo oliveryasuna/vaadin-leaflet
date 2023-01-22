@@ -33,15 +33,15 @@ function getMap(index: number): L.Map | undefined {
  * Creates and adds a {@link L.Map} to the store.
  *
  * @param elementId The ID of the element to add the {@link L.Map} to.
+ * @param options The options.
  *
  * @return The index of the {@link L.Map} in the store.
  */
-// TODO: More parameters.
-function addMap(elementId: string): number {
+function addMap(elementId: string, options?: L.MapOptions): number {
   const store: L.Map[] = window.LeafletAddon.support.map.store;
 
   const id: number = store.length;
-  const map: L.Map = L.map(elementId);
+  const map: L.Map = L.map(elementId, options);
 
   store.push(map);
 

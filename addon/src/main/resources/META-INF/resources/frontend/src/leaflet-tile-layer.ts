@@ -33,15 +33,15 @@ function getTileLayer(index: number): L.TileLayer | undefined {
  * Creates and adds a {@link L.TileLayer} to the store.
  *
  * @param urlTemplate The URL template of the {@link L.TileLayer}.
+ * @param options The options.
  *
  * @return The index of the {@link L.TileLayer} in the store.
  */
-// TODO: More parameters.
-function addTileLayer(urlTemplate: string): number {
+function addTileLayer(urlTemplate: string, options?: L.TileLayerOptions): number {
   const store: L.TileLayer[] = window.LeafletAddon.support.tileLayer.store;
 
   const id: number = store.length;
-  const tileLayer: L.TileLayer = L.tileLayer(urlTemplate);
+  const tileLayer: L.TileLayer = L.tileLayer(urlTemplate, options);
 
   store.push(tileLayer);
 
