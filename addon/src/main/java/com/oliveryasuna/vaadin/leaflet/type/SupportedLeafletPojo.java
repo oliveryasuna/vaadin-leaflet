@@ -19,6 +19,7 @@
 package com.oliveryasuna.vaadin.leaflet.type;
 
 import com.oliveryasuna.vaadin.leaflet.util.FrontendUtils;
+import com.oliveryasuna.vaadin.leaflet.util.JsStoreConstants;
 import com.vaadin.flow.component.page.PendingJavaScriptResult;
 
 import java.io.Serializable;
@@ -37,17 +38,14 @@ public interface SupportedLeafletPojo extends LeafletPojo {
 
   String SUPPORT_PROPERTY_NAME = "support";
 
-  String GET_FUNCTION_NAME = "get";
-
-  String ADD_FUNCTION_NAME = "add";
-
   // Static methods
   //--------------------------------------------------
 
   static String buildJsGetExpression(final SupportedLeafletPojo supportedLeafletPojo) {
     return FrontendUtils.buildJsFunctionCall(
         FrontendUtils.buildJsPropertyAccessor(FrontendUtils.JsPropertyAccessorNotation.DOT,
-            "window", FrontendUtils.LEAFLET_ADDON_PROPERTY_NAME, SUPPORT_PROPERTY_NAME, supportedLeafletPojo.getSupportPropertyName(), GET_FUNCTION_NAME),
+            "window", FrontendUtils.LEAFLET_ADDON_PROPERTY_NAME, SUPPORT_PROPERTY_NAME, supportedLeafletPojo.getSupportPropertyName(),
+            JsStoreConstants.STORE_PROPERTY_NAME, JsStoreConstants.GET_FUNCTION_NAME),
         supportedLeafletPojo.getId()
     );
   }

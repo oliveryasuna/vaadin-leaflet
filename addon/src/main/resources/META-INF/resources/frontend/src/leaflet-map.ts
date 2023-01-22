@@ -26,7 +26,7 @@ import * as L from 'leaflet';
  * @return The {@link L.Map} at the given index, or `undefined` if the index is out of bounds.
  */
 function getMap(index: number): L.Map | undefined {
-  return window.LeafletAddon.support.map.store[index];
+  return window.LeafletAddon.support.map.store.values[index];
 }
 
 /**
@@ -42,7 +42,7 @@ function addMap(elementId: string, options?: L.MapOptions): number {
 }
 
 function __addMap(map: L.Map): number {
-  const store: L.Map[] = window.LeafletAddon.support.map.store;
+  const store: L.Map[] = window.LeafletAddon.support.map.store.values;
   const id: number = store.length;
 
   store.push(map);

@@ -26,7 +26,7 @@ import * as L from 'leaflet';
  * @return The {@link L.TileLayer} at the given index, or `undefined` if the index is out of bounds.
  */
 function getTileLayer(index: number): L.TileLayer | undefined {
-  return window.LeafletAddon.support.tileLayer.store[index];
+  return window.LeafletAddon.support.tileLayer.store.values[index];
 }
 
 /**
@@ -42,7 +42,7 @@ function addTileLayer(urlTemplate: string, options?: L.TileLayerOptions): number
 }
 
 function __addTileLayer(tileLayer: L.TileLayer): number {
-  const store: L.TileLayer[] = window.LeafletAddon.support.tileLayer.store;
+  const store: L.TileLayer[] = window.LeafletAddon.support.tileLayer.store.values;
   const id: number = store.length;
 
   store.push(tileLayer);

@@ -16,40 +16,13 @@
  * TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import * as L from 'leaflet';
+interface Store<T> {
+  values: T[];
 
-/**
- * Gets the {@link L#GridLayer} at the given index.
- *
- * @param index The index of the {@link L#GridLayer} in the store.
- *
- * @return The {@link L#GridLayer} at the given index, or `undefined` if the index is out of bounds.
- */
-function getGridLayer(index: number): L.GridLayer | undefined {
-  return window.LeafletAddon.support.gridLayer.store.values[index];
-}
-
-/**
- * Creates and adds a {@link L#GridLayer} to the store.
- *
- * @param options The options.
- *
- * @return The index of the {@link L#GridLayer} in the store.
- */
-function addGridLayer(options?: L.GridLayerOptions): number {
-  return __addGridLayer(L.gridLayer(options));
-}
-
-function __addGridLayer(gridLayer: L.GridLayer): number {
-  const store: L.GridLayer[] = window.LeafletAddon.support.gridLayer.store.values;
-  const id: number = store.length;
-
-  store.push(gridLayer);
-
-  return id;
+  get(index: number): T | undefined;
+  add: (...args: any[]) => number;
 }
 
 export {
-  getGridLayer,
-  addGridLayer
+  Store
 };

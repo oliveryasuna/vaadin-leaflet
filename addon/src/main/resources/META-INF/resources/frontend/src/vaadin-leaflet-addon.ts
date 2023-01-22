@@ -21,32 +21,21 @@ import {addGridLayer, getGridLayer} from './leaflet-grid-layer';
 import {addMap, getMap} from './leaflet-map';
 import {addTileLayer, getTileLayer} from './leaflet-tile-layer';
 import {addLatLng, getLatLng} from './leaflet-lat-lng';
+import {Store} from './store';
 
 interface LeafletAddon {
   support: {
     latLng: {
-      store: L.LatLng[],
-
-      get: (index: number) => L.LatLng | undefined,
-      add: (latitude: number, longitude: number, altitude: number) => number,
+      store: Store<L.LatLng>
     },
     gridLayer: {
-      store: L.GridLayer[],
-
-      get: (index: number) => L.GridLayer | undefined,
-      add: () => number,
+      store: Store<L.GridLayer>
     },
     tileLayer: {
-      store: L.TileLayer[],
-
-      get: (index: number) => L.TileLayer | undefined,
-      add: (urlTemplate: string) => number,
+      store: Store<L.TileLayer>
     },
     map: {
-      store: L.Map[],
-
-      get: (index: number) => L.Map | undefined,
-      add: (elementId: string) => number,
+      store: Store<L.Map>
     }
   };
 }
@@ -55,24 +44,38 @@ if(!window.LeafletAddon) {
   window.LeafletAddon = {
     support: {
       latLng: {
-        store: [],
-        get: getLatLng,
-        add: addLatLng
+        store: {
+          values: [],
+          get: getLatLng,
+          add: addLatLng
+        }
       },
       gridLayer: {
-        store: [],
-        get: getGridLayer,
-        add: addGridLayer
+        store: {
+          values: [],
+          get: getGridLayer,
+          add: addGridLayer
+        }
       },
       tileLayer: {
-        store: [],
-        get: getTileLayer,
-        add: addTileLayer
+        // store: [],
+        // get: getTileLayer,
+        // add: addTileLayer
+        store: {
+          values: [],
+          get: getTileLayer,
+          add: addTileLayer
+        }
       },
       map: {
-        store: [],
-        get: getMap,
-        add: addMap
+        // store: [],
+        // get: getMap,
+        // add: addMap
+        store: {
+          values: [],
+          get: getMap,
+          add: addMap
+        }
       }
     }
   };

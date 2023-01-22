@@ -16,40 +16,33 @@
  * TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import * as L from 'leaflet';
+package com.oliveryasuna.vaadin.leaflet.util;
+
+import com.oliveryasuna.commons.language.exception.UnsupportedInstantiationException;
 
 /**
- * Gets the {@link L#GridLayer} at the given index.
+ * Constants relating to the {@code Store} type.
  *
- * @param index The index of the {@link L#GridLayer} in the store.
- *
- * @return The {@link L#GridLayer} at the given index, or `undefined` if the index is out of bounds.
+ * @author Oliver Yasuna
  */
-function getGridLayer(index: number): L.GridLayer | undefined {
-  return window.LeafletAddon.support.gridLayer.store.values[index];
+public final class JsStoreConstants {
+
+  // Static fields
+  //--------------------------------------------------
+
+  public static final String STORE_PROPERTY_NAME = "store";
+
+  public static final String GET_FUNCTION_NAME = "get";
+
+  public static final String ADD_FUNCTION_NAME = "add";
+
+  // Constructors
+  //--------------------------------------------------
+
+  private JsStoreConstants() {
+    super();
+
+    throw new UnsupportedInstantiationException();
+  }
+
 }
-
-/**
- * Creates and adds a {@link L#GridLayer} to the store.
- *
- * @param options The options.
- *
- * @return The index of the {@link L#GridLayer} in the store.
- */
-function addGridLayer(options?: L.GridLayerOptions): number {
-  return __addGridLayer(L.gridLayer(options));
-}
-
-function __addGridLayer(gridLayer: L.GridLayer): number {
-  const store: L.GridLayer[] = window.LeafletAddon.support.gridLayer.store.values;
-  const id: number = store.length;
-
-  store.push(gridLayer);
-
-  return id;
-}
-
-export {
-  getGridLayer,
-  addGridLayer
-};

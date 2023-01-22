@@ -26,7 +26,7 @@ import * as L from 'leaflet';
  * @return The {@link L.LatLng} at the given index, or `undefined` if the index is out of bounds.
  */
 function getLatLng(index: number): L.LatLng | undefined {
-  return window.LeafletAddon.support.latLng.store[index];
+  return window.LeafletAddon.support.latLng.store.values[index];
 }
 
 /**
@@ -43,7 +43,7 @@ function addLatLng(latitude: number, longitude: number, altitude?: number): numb
 }
 
 function __addLatLng(latLng: L.LatLng): number {
-  const store: L.LatLng[] = window.LeafletAddon.support.latLng.store;
+  const store: L.LatLng[] = window.LeafletAddon.support.latLng.store.values;
   const id: number = store.length;
 
   store.push(latLng);
