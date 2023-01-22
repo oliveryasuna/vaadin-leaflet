@@ -21,15 +21,13 @@ package com.oliveryasuna.vaadin.leaflet.type;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
 
-import java.io.Serializable;
-
 /**
  * Represents the Leaflet API {@code LatLngTuple} type.
  *
  * @author Oliver Yasuna
  */
 @JsonFormat(shape = JsonFormat.Shape.ARRAY)
-public class LLatLngTuple implements LLatLngExpression, Serializable {
+public class LLatLngTuple implements LLatLngExpression {
 
   // Constructors
   //--------------------------------------------------

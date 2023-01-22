@@ -21,14 +21,12 @@ package com.oliveryasuna.vaadin.leaflet.type;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 
-import java.io.Serializable;
-
 /**
  * Represents the Leaflet API {@code LatLangLiteral} type.
  *
  * @author Oliver Yasuna
  */
-public class LLatLngLiteral implements LLatLngExpression, Serializable {
+public class LLatLngLiteral implements LLatLngExpression {
 
   // Constructors
   //--------------------------------------------------
