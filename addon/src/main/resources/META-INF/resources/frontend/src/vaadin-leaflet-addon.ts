@@ -21,21 +21,36 @@ import {addGridLayer, getGridLayer} from './leaflet-grid-layer';
 import {addMap, getMap} from './leaflet-map';
 import {addTileLayer, getTileLayer} from './leaflet-tile-layer';
 import {addLatLng, getLatLng} from './leaflet-lat-lng';
-import {Store} from './store';
 
 interface LeafletAddon {
   support: {
     latLng: {
-      store: Store<L.LatLng>
+      store: {
+        values: L.LatLng[];
+        get: (index: number) => L.LatLng | undefined;
+        add: (latitude: number, longitude: number, altitude?: number) => number;
+      }
     },
     gridLayer: {
-      store: Store<L.GridLayer>
+      store: {
+        values: L.GridLayer[];
+        get: (index: number) => L.GridLayer | undefined;
+        add: (options?: L.GridLayerOptions) => number;
+      }
     },
     tileLayer: {
-      store: Store<L.TileLayer>
+      store: {
+        values: L.TileLayer[];
+        get: (index: number) => L.TileLayer | undefined;
+        add: (urlTemplate: string, options?: L.TileLayerOptions) => number;
+      }
     },
     map: {
-      store: Store<L.Map>
+      store: {
+        values: L.Map[];
+        get: (index: number) => L.Map | undefined;
+        add: (elementId: string, options?: L.MapOptions) => number;
+      }
     }
   };
 }

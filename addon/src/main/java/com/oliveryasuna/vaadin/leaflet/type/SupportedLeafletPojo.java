@@ -19,7 +19,6 @@
 package com.oliveryasuna.vaadin.leaflet.type;
 
 import com.oliveryasuna.vaadin.leaflet.util.FrontendUtils;
-import com.oliveryasuna.vaadin.leaflet.util.JsStoreConstants;
 import com.vaadin.flow.component.page.PendingJavaScriptResult;
 
 import java.io.Serializable;
@@ -38,27 +37,33 @@ public interface SupportedLeafletPojo extends LeafletPojo {
 
   String SUPPORT_PROPERTY_NAME = "support";
 
+  String STORE_PROPERTY_NAME = "store";
+
+  String GET_FUNCTION_NAME = "get";
+
+  String ADD_FUNCTION_NAME = "add";
+
   // Static methods
   //--------------------------------------------------
 
-  static String buildJsGetExpression(final SupportedLeafletPojo supportedLeafletPojo) {
+  static String buildJsStoreGetExpression(final SupportedLeafletPojo supportedLeafletPojo) {
     return FrontendUtils.buildJsFunctionCall(
         FrontendUtils.buildJsPropertyAccessor(FrontendUtils.JsPropertyAccessorNotation.DOT,
-            "window", FrontendUtils.LEAFLET_ADDON_PROPERTY_NAME, SUPPORT_PROPERTY_NAME, supportedLeafletPojo.getSupportPropertyName(),
-            JsStoreConstants.STORE_PROPERTY_NAME, JsStoreConstants.GET_FUNCTION_NAME),
+            "window", FrontendUtils.LEAFLET_ADDON_PROPERTY_NAME, SUPPORT_PROPERTY_NAME, supportedLeafletPojo.getSupportPropertyName(), STORE_PROPERTY_NAME,
+            GET_FUNCTION_NAME),
         supportedLeafletPojo.getId()
     );
   }
 
   static String buildJsPropertyAccessorExpression(final SupportedLeafletPojo supportedLeafletPojo, final String propertyName) {
     return FrontendUtils.buildJsPropertyAccessor(FrontendUtils.JsPropertyAccessorNotation.DOT,
-        buildJsGetExpression(supportedLeafletPojo), propertyName);
+        buildJsStoreGetExpression(supportedLeafletPojo), propertyName);
   }
 
   static String buildJsMethodCallExpression(final SupportedLeafletPojo supportedLeafletPojo, final String functionName, final Serializable... arguments) {
     return FrontendUtils.buildJsFunctionCall(
         FrontendUtils.buildJsPropertyAccessor(FrontendUtils.JsPropertyAccessorNotation.DOT,
-            buildJsGetExpression(supportedLeafletPojo), functionName),
+            buildJsStoreGetExpression(supportedLeafletPojo), functionName),
         FrontendUtils.buildJsFunctionParametersExpression(IntStream.range(0, arguments.length).toArray())
     );
   }
@@ -66,8 +71,17 @@ public interface SupportedLeafletPojo extends LeafletPojo {
   static String buildJsMethodCall(final SupportedLeafletPojo supportedLeafletPojo, final String functionName, final String rawArguments) {
     return FrontendUtils.buildJsFunctionCall(
         FrontendUtils.buildJsPropertyAccessor(FrontendUtils.JsPropertyAccessorNotation.DOT,
-            buildJsGetExpression(supportedLeafletPojo), functionName),
+            buildJsStoreGetExpression(supportedLeafletPojo), functionName),
         rawArguments
+    );
+  }
+
+  static String buildJsSupportMethodCall(final SupportedLeafletPojo supportedLeafletPojo, final String functionName, final Serializable... arguments) {
+    return FrontendUtils.buildJsFunctionCall(
+        FrontendUtils.buildJsPropertyAccessor(FrontendUtils.JsPropertyAccessorNotation.DOT,
+            "window", FrontendUtils.LEAFLET_ADDON_PROPERTY_NAME, SUPPORT_PROPERTY_NAME, supportedLeafletPojo.getSupportPropertyName(),
+            STORE_PROPERTY_NAME, GET_FUNCTION_NAME),
+        supportedLeafletPojo.getId()
     );
   }
 
@@ -101,6 +115,9 @@ public interface SupportedLeafletPojo extends LeafletPojo {
     } else {
       return result.toCompletableFuture(Void.class);
     }
+  }
+
+  default CompletableFuture<?> callJsSupportMethod(final Class<?> returnType, final String methodName, final Serializable... arguments) {
   }
 
   String getSupportPropertyName();

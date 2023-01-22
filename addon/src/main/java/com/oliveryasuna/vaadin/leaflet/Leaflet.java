@@ -18,12 +18,8 @@
 
 package com.oliveryasuna.vaadin.leaflet;
 
-import com.oliveryasuna.vaadin.leaflet.type.LGridLayer;
-import com.oliveryasuna.vaadin.leaflet.type.LLatLng;
-import com.oliveryasuna.vaadin.leaflet.type.LMap;
-import com.oliveryasuna.vaadin.leaflet.type.LTileLayer;
+import com.oliveryasuna.vaadin.leaflet.type.*;
 import com.oliveryasuna.vaadin.leaflet.util.FrontendUtils;
-import com.oliveryasuna.vaadin.leaflet.util.JsStoreConstants;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.dependency.NpmPackage;
 
@@ -67,7 +63,7 @@ public class Leaflet {
         Integer.class,
         supportPropertyName,
         FrontendUtils.buildJsPropertyAccessor(FrontendUtils.JsPropertyAccessorNotation.DOT,
-            JsStoreConstants.STORE_PROPERTY_NAME, JsStoreConstants.ADD_FUNCTION_NAME),
+            SupportedLeafletPojo.STORE_PROPERTY_NAME, SupportedLeafletPojo.ADD_FUNCTION_NAME),
         arguments);
   }
 
