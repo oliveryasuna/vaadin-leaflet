@@ -19,20 +19,20 @@
 import * as L from 'leaflet';
 
 /**
- * Gets the grid layer at the given index.
+ * Gets the {@link L#GridLayer} at the given index.
  *
- * @param index The index of the grid layer in the store.
+ * @param index The index of the {@link L#GridLayer} in the store.
  *
- * @return The grid layer at the given index, or `undefined` if the index is out of bounds.
+ * @return The {@link L#GridLayer} at the given index, or `undefined` if the index is out of bounds.
  */
 function getGridLayer(index: number): L.GridLayer | undefined {
   return window.LeafletAddon.support.gridLayer.store[index];
 }
 
 /**
- * Creates and adds a grid layer to the store.
+ * Creates and adds a {@link L#GridLayer} to the store.
  *
- * @return The index of the grid layer in the store.
+ * @return The index of the {@link L#GridLayer} in the store.
  */
 // TODO: More parameters.
 function addGridLayer(): number {

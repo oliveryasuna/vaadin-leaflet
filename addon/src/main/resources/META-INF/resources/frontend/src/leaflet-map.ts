@@ -19,22 +19,22 @@
 import * as L from 'leaflet';
 
 /**
- * Gets the map at the given index.
+ * Gets the {@link L.Map} at the given index.
  *
- * @param index The index of the map in the store.
+ * @param index The index of the {@link L.Map} in the store.
  *
- * @return The map at the given index, or `undefined` if the index is out of bounds.
+ * @return The {@link L.Map} at the given index, or `undefined` if the index is out of bounds.
  */
 function getMap(index: number): L.Map | undefined {
   return window.LeafletAddon.support.map.store[index];
 }
 
 /**
- * Creates and adds a map to the store.
+ * Creates and adds a {@link L.Map} to the store.
  *
- * @param elementId The ID of the element to add the map to.
+ * @param elementId The ID of the element to add the {@link L.Map} to.
  *
- * @return The index of the map in the store.
+ * @return The index of the {@link L.Map} in the store.
  */
 // TODO: More parameters.
 function addMap(elementId: string): number {

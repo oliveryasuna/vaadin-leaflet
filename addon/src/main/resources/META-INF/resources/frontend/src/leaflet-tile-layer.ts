@@ -19,22 +19,22 @@
 import * as L from 'leaflet';
 
 /**
- * Gets the tile layer at the given index.
+ * Gets the {@link L.TileLayer} at the given index.
  *
- * @param index The index of the tile layer in the store.
+ * @param index The index of the {@link L.TileLayer} in the store.
  *
- * @return The tile layer at the given index, or `undefined` if the index is out of bounds.
+ * @return The {@link L.TileLayer} at the given index, or `undefined` if the index is out of bounds.
  */
 function getTileLayer(index: number): L.TileLayer | undefined {
   return window.LeafletAddon.support.tileLayer.store[index];
 }
 
 /**
- * Creates and adds a tile layer to the store.
+ * Creates and adds a {@link L.TileLayer} to the store.
  *
- * @param urlTemplate The URL template of the tile layer.
+ * @param urlTemplate The URL template of the {@link L.TileLayer}.
  *
- * @return The index of the tile layer in the store.
+ * @return The index of the {@link L.TileLayer} in the store.
  */
 // TODO: More parameters.
 function addTileLayer(urlTemplate: string): number {

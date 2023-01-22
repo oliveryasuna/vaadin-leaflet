@@ -19,22 +19,25 @@
 import * as L from 'leaflet';
 
 /**
- * Gets the {@link L#LatLng} at the given index.
+ * Gets the {@link L.LatLng} at the given index.
  *
- * @param index The index of the {@link L#LatLng} in the store.
+ * @param index The index of the {@link L.LatLng} in the store.
  *
- * @return The {@link L#LatLng} at the given index, or `undefined` if the index is out of bounds.
+ * @return The {@link L.LatLng} at the given index, or `undefined` if the index is out of bounds.
  */
 function getLatLng(index: number): L.LatLng | undefined {
   return window.LeafletAddon.support.latLng.store[index];
 }
 
 /**
- * Creates and adds a {@link L#LatLng} to the store.
+ * Creates and adds a {@link L.LatLng} to the store.
  *
- * @return The index of the {@link L#LatLng} in the store.
+ * @param latitude The latitude.
+ * @param longitude The longitude.
+ * @param altitude The altitude.
+ *
+ * @return The index of the {@link L.LatLng} in the store.
  */
-// TODO: More parameters.
 function addLatLng(latitude: number, longitude: number, altitude?: number): number {
   const store: L.LatLng[] = window.LeafletAddon.support.latLng.store;
 
