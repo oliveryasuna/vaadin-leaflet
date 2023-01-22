@@ -18,10 +18,7 @@
 
 package com.oliveryasuna.vaadin.leaflet;
 
-import com.oliveryasuna.vaadin.leaflet.type.LGridLayer;
-import com.oliveryasuna.vaadin.leaflet.type.LMap;
-import com.oliveryasuna.vaadin.leaflet.type.LTileLayer;
-import com.oliveryasuna.vaadin.leaflet.type.SupportedLeafletPojo;
+import com.oliveryasuna.vaadin.leaflet.type.*;
 import com.oliveryasuna.vaadin.leaflet.util.FrontendUtils;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.dependency.NpmPackage;
@@ -89,7 +86,17 @@ public class Leaflet {
 
   // TODO: transformation().
 
-  // TODO: latLng().
+  public CompletableFuture<LLatLng> latLng(final UI ui, final double latitude, final double longitude) {
+    return executeSupportStoreAddFunction(ui, LLatLng.SUPPORT_PROPERTY_NAME, latitude, longitude)
+        .thenApply(id -> LLatLng.createAndStore(ui, id));
+  }
+
+  public CompletableFuture<LLatLng> latLng(final UI ui, final double latitude, final double longitude, final double altitude) {
+    return executeSupportStoreAddFunction(ui, LLatLng.SUPPORT_PROPERTY_NAME, latitude, longitude, altitude)
+        .thenApply(id -> LLatLng.createAndStore(ui, id));
+  }
+
+  // TODO: Other latLng() methods.
 
   // TODO: latLngBounds().
 

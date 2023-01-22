@@ -28,7 +28,6 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 
@@ -50,9 +49,9 @@ public class DemoView extends Composite<VerticalLayout> {
                 .thenAccept(tileLayer -> tileLayer.addTo(map2))));
 
     final VerticalLayout content = new VerticalLayout();
-    content.add(new HorizontalLayout(controls()));
     content.add(mapContainer);
     content.setSizeFull();
+    content.setPadding(false);
 
     return content;
   }

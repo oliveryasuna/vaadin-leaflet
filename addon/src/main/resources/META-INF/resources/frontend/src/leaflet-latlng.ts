@@ -17,69 +17,36 @@
  */
 
 import * as L from 'leaflet';
-import {addGridLayer, getGridLayer} from './leaflet-grid-layer';
-import {addMap, getMap} from './leaflet-map';
-import {addTileLayer, getTileLayer} from './leaflet-tile-layer';
-import {addLatLng, getLatLng} from './leaflet-latlng';
 
-interface LeafletAddon {
-  support: {
-    latLng: {
-      store: L.LatLng[],
-
-      get: (index: number) => L.LatLng | undefined,
-      add: (latitude: number, longitude: number, altitude: number) => number,
-    },
-    gridLayer: {
-      store: L.GridLayer[],
-
-      get: (index: number) => L.GridLayer | undefined,
-      add: () => number,
-    },
-    tileLayer: {
-      store: L.TileLayer[],
-
-      get: (index: number) => L.TileLayer | undefined,
-      add: (urlTemplate: string) => number,
-    },
-    map: {
-      store: L.Map[],
-
-      get: (index: number) => L.Map | undefined,
-      add: (elementId: string) => number,
-    }
-  };
+/**
+ * Gets the {@link L#LatLng} at the given index.
+ *
+ * @param index The index of the {@link L#LatLng} in the store.
+ *
+ * @return The {@link L#LatLng} at the given index, or `undefined` if the index is out of bounds.
+ */
+function getLatLng(index: number): L.LatLng | undefined {
+  return window.LeafletAddon.support.latLng.store[index];
 }
 
-if(!window.LeafletAddon) {
-  window.LeafletAddon = {
-    support: {
-      latLng: {
-        store: [],
-        get: getLatLng,
-        add: addLatLng
-      },
-      gridLayer: {
-        store: [],
-        get: getGridLayer,
-        add: addGridLayer
-      },
-      tileLayer: {
-        store: [],
-        get: getTileLayer,
-        add: addTileLayer
-      },
-      map: {
-        store: [],
-        get: getMap,
-        add: addMap
-      }
-    }
-  };
+/**
+ * Creates and adds a {@link L#LatLng} to the store.
+ *
+ * @return The index of the {@link L#LatLng} in the store.
+ */
+// TODO: More parameters.
+function addLatLng(latitude: number, longitude: number, altitude?: number): number {
+  const store: L.LatLng[] = window.LeafletAddon.support.latLng.store;
+
+  const id: number = store.length;
+  const latLng: L.LatLng = L.latLng(latitude, longitude, altitude);
+
+  store.push(latLng);
+
+  return id;
 }
 
-declare global {
-  interface Window {
-    LeafletAddon: LeafletAddon;
-  }
-}
+export {
+  getLatLng,
+  addLatLng
+};
