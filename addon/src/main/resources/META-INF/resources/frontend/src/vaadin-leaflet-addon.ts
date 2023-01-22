@@ -58,9 +58,6 @@ if(!window.LeafletAddon) {
         }
       },
       tileLayer: {
-        // store: [],
-        // get: getTileLayer,
-        // add: addTileLayer
         store: {
           values: [],
           get: getTileLayer,
@@ -68,9 +65,6 @@ if(!window.LeafletAddon) {
         }
       },
       map: {
-        // store: [],
-        // get: getMap,
-        // add: addMap
         store: {
           values: [],
           get: getMap,
