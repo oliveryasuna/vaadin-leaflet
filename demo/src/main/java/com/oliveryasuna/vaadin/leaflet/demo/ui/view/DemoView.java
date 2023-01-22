@@ -45,7 +45,7 @@ public class DemoView extends Composite<VerticalLayout> {
     mapContainer.setSizeFull();
 
     Leaflet.getInstance().map(UI.getCurrent(), "map")
-        .thenAccept(map -> map.setView(new LLatLngTuple(51.505, -0.09), 13)
+        .thenAccept(map -> map.setView(new LLatLngTuple(42.2250837, -71.6016022), 12)
             .thenAccept(map2 -> Leaflet.getInstance().tileLayer(map2.getUi(), "https://tile.openstreetmap.org/{z}/{x}/{y}.png")
                 .thenAccept(tileLayer -> tileLayer.addTo(map2))));
 

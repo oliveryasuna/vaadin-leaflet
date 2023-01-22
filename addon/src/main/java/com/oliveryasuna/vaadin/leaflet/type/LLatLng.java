@@ -28,29 +28,28 @@ import java.util.WeakHashMap;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * Represents the Leaflet API {@code Map} type.
+ * Represents the Leaflet API {@code LatLng} type.
  *
  * @author Oliver Yasuna
  */
-// TODO: extends LEvented?
-public class LMap implements SupportedLeafletPojo {
+public class LLatLng implements SupportedLeafletPojo {
 
   // Static fields
   //--------------------------------------------------
 
-  public static final String SUPPORT_PROPERTY_NAME = "map";
+  public static final String SUPPORT_PROPERTY_NAME = "latLng";
 
   // Static instances
   //--------------------------------------------------
 
-  protected static final Map<Integer, LMap> STORE = Collections.synchronizedMap(new WeakHashMap<>());
+  protected static final Map<Integer, LLatLng> STORE = Collections.synchronizedMap(new WeakHashMap<>());
 
-  public static synchronized LMap get(final int id) {
+  public static synchronized LLatLng get(final int id) {
     return STORE.get(id);
   }
 
-  public static synchronized LMap createAndStore(final UI ui, final int id) {
-    final LMap map = new LMap(ui, id);
+  public static synchronized LLatLng createAndStore(final UI ui, final int id) {
+    final LLatLng map = new LLatLng(ui, id);
 
     STORE.put(id, map);
 
@@ -60,7 +59,7 @@ public class LMap implements SupportedLeafletPojo {
   // Constructors
   //--------------------------------------------------
 
-  protected LMap(final UI ui, final int id) {
+  protected LLatLng(final UI ui, final int id) {
     super();
 
     this.ui = ui;
@@ -77,37 +76,55 @@ public class LMap implements SupportedLeafletPojo {
   // Methods
   //--------------------------------------------------
 
-  // TODO: JavaScript properties
+  // JavaScript properties
   //
+
+  public CompletableFuture<Double> lat() {
+    return getJsProperty(Double.class, "lat");
+  }
+
+  public CompletableFuture<Double> lng() {
+    return getJsProperty(Double.class, "lng");
+  }
+
+  public CompletableFuture<Double> alt() {
+    return getJsProperty(Double.class, "alt");
+  }
 
   // JavaScript functions
   //
 
-  // TODO: Many more methods.
+  public CompletableFuture<Boolean> jsEquals(final LLatLngExpression otherLatLng) {
+    final JsonValue otherLatLngJson = SerializationUtils.toElementalValue(otherLatLng);
 
-  public CompletableFuture<LMap> setView(final LLatLngExpression center) {
-    final JsonValue centerJson = SerializationUtils.toElementalValue(center);
-
-    return callJsFunction(null, "setView", centerJson)
-        .thenApply(ignored -> this);
+    return callJsFunction(Boolean.class, "equals", otherLatLngJson)
+        .thenApply(Boolean.class::cast);
   }
 
-  public CompletableFuture<LMap> setView(final LLatLngExpression center, final double zoom) {
-    final JsonValue centerJson = SerializationUtils.toElementalValue(center);
+  public CompletableFuture<Boolean> jsEquals(final LLatLngExpression otherLatLng, final double maxMargin) {
+    final JsonValue otherLatLngJson = SerializationUtils.toElementalValue(otherLatLng);
 
-    return callJsFunction(null, "setView", centerJson, zoom)
-        .thenApply(ignored -> this);
+    return callJsFunction(Boolean.class, "equals", otherLatLngJson, maxMargin)
+        .thenApply(Boolean.class::cast);
   }
 
-  public CompletableFuture<LMap> setView(final LLatLngExpression center, final double zoom, final LZoomPanOptions options) {
-    final JsonValue centerJson = SerializationUtils.toElementalValue(center);
-    final JsonValue optionsJson = SerializationUtils.toElementalValue(options);
-
-    return callJsFunction(null, "setView", centerJson, zoom, optionsJson)
-        .thenApply(ignored -> this);
+  public CompletableFuture<String> jsToString() {
+    return callJsFunction(String.class, "toString")
+        .thenApply(String.class::cast);
   }
 
-  // TODO: Many more methods.
+  public CompletableFuture<Double> distanceTo(final LLatLngExpression otherLatLng) {
+    final JsonValue otherLatLngJson = SerializationUtils.toElementalValue(otherLatLng);
+
+    return callJsFunction(Double.class, "distanceTo", otherLatLngJson)
+        .thenApply(Double.class::cast);
+  }
+
+  // TODO: wrap(): LatLng.
+
+  // TODO: toBounds(number): LatLngBounds.
+
+  // TODO: jsClone(): LatLng.
 
   // Miscellaneous
   //

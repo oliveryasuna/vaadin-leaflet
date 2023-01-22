@@ -26,7 +26,7 @@ import * as L from 'leaflet';
  * @return The grid layer at the given index, or `undefined` if the index is out of bounds.
  */
 function getGridLayer(index: number): L.GridLayer | undefined {
-  return window.LeafletAddon.gridLayers[index];
+  return window.LeafletAddon.support.gridLayer.store[index];
 }
 
 /**
@@ -36,12 +36,12 @@ function getGridLayer(index: number): L.GridLayer | undefined {
  */
 // TODO: More parameters.
 function addGridLayer(): number {
-  const gridLayers: L.GridLayer[] = window.LeafletAddon.gridLayers;
+  const store: L.GridLayer[] = window.LeafletAddon.support.gridLayer.store;
 
-  const id: number = gridLayers.length;
+  const id: number = store.length;
   const gridLayer: L.GridLayer = L.gridLayer();
 
-  gridLayers.push(gridLayer);
+  store.push(gridLayer);
 
   return id;
 }

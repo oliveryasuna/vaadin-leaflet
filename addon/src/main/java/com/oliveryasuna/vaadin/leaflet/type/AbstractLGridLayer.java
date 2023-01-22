@@ -38,10 +38,6 @@ public abstract class AbstractLGridLayer<T extends AbstractLGridLayer<T>> extend
   //--------------------------------------------------
 
   // TODO: JavaScript functions.
-
-  @Override
-  public String getStorageAccessorFunctionName() {
-    return "getGridLayer";
-  }
+  //
 
 }

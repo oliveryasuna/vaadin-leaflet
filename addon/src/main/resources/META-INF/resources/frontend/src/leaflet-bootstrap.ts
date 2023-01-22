@@ -22,32 +22,47 @@ import {addMap, getMap} from './leaflet-map';
 import {addTileLayer, getTileLayer} from './leaflet-tile-layer';
 
 interface LeafletAddon {
-  gridLayers: L.GridLayer[];
-  getGridLayer: typeof getGridLayer;
-  addGridLayer: typeof addGridLayer;
+  support: {
+    gridLayer: {
+      store: L.GridLayer[],
 
-  tileLayers: L.TileLayer[];
-  getTileLayer: typeof getTileLayer;
-  addTileLayer: typeof addTileLayer;
+      get: (index: number) => L.GridLayer | undefined,
+      add: () => number,
+    },
+    tileLayer: {
+      store: L.TileLayer[],
 
-  maps: L.Map[];
-  getMap: typeof getMap;
-  addMap: typeof addMap;
+      get: (index: number) => L.TileLayer | undefined,
+      add: (urlTemplate: string) => number,
+    },
+    map: {
+      store: L.Map[],
+
+      get: (index: number) => L.Map | undefined,
+      add: (elementId: string) => number,
+    }
+  };
 }
 
 if(!window.LeafletAddon) {
   window.LeafletAddon = {
-    gridLayers: [],
-    getGridLayer,
-    addGridLayer,
-
-    tileLayers: [],
-    getTileLayer,
-    addTileLayer,
-
-    maps: [],
-    getMap,
-    addMap
+    support: {
+      gridLayer: {
+        store: [],
+        get: getGridLayer,
+        add: addGridLayer
+      },
+      tileLayer: {
+        store: [],
+        get: getTileLayer,
+        add: addTileLayer
+      },
+      map: {
+        store: [],
+        get: getMap,
+        add: addMap
+      }
+    }
   };
 }
 

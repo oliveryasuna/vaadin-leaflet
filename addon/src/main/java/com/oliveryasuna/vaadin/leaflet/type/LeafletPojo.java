@@ -33,6 +33,8 @@ public interface LeafletPojo {
   // Methods
   //--------------------------------------------------
 
+  <T extends Serializable> CompletableFuture<T> getJsProperty(final Class<T> type, final String propertyName);
+
   CompletableFuture<?> callJsFunction(final Class<?> returnType, final String functionName, final Serializable... arguments);
 
   CompletableFuture<?> callJsFunction(final Class<?> returnType, final String functionName, final String rawArguments);

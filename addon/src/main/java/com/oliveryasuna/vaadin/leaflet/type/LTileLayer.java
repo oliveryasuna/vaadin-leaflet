@@ -21,8 +21,8 @@ package com.oliveryasuna.vaadin.leaflet.type;
 import com.vaadin.flow.component.UI;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.WeakHashMap;
 
 /**
  * Represents the Leaflet API {@code TileLayer} type.
@@ -31,10 +31,15 @@ import java.util.Map;
  */
 public class LTileLayer extends AbstractLGridLayer<LTileLayer> {
 
+  // Static fields
+  //--------------------------------------------------
+
+  public static final String SUPPORT_PROPERTY_NAME = "tileLayer";
+
   // Static instances
   //--------------------------------------------------
 
-  protected static final Map<Integer, LTileLayer> STORE = Collections.synchronizedMap(new HashMap<>());
+  protected static final Map<Integer, LTileLayer> STORE = Collections.synchronizedMap(new WeakHashMap<>());
 
   public static synchronized LTileLayer get(final int id) {
     return STORE.get(id);
@@ -51,23 +56,25 @@ public class LTileLayer extends AbstractLGridLayer<LTileLayer> {
   // Constructors
   //--------------------------------------------------
 
-  public LTileLayer(final UI ui, final int id) {
+  protected LTileLayer(final UI ui, final int id) {
     super(LTileLayer.class, ui, id);
   }
-
-  // TODO: JavaScript constructors.
-  //       Don't forget to create equivalent createAndStore methods?
 
   // Methods
   //--------------------------------------------------
 
   // TODO: JavaScript properties.
+  //
 
   // TODO: JavaScript methods.
+  //
+
+  // Miscellaneous
+  //
 
   @Override
-  public String getStorageAccessorFunctionName() {
-    return "getTileLayer";
+  public String getSupportPropertyName() {
+    return SUPPORT_PROPERTY_NAME;
   }
 
 }

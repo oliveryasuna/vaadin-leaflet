@@ -19,10 +19,7 @@
 package com.oliveryasuna.vaadin.leaflet.util;
 
 import com.oliveryasuna.commons.language.exception.UnsupportedInstantiationException;
-import com.vaadin.flow.component.UI;
 
-import java.io.Serializable;
-import java.util.concurrent.CompletableFuture;
 import java.util.stream.IntStream;
 
 /**
@@ -40,24 +37,6 @@ public final class FrontendUtils {
 
   // Static methods
   //--------------------------------------------------
-
-  public static <R extends Serializable> CompletableFuture<? extends R> executeLeafletAddonFunction(final UI ui, final Class<? extends R> returnType,
-      final String functionName, final Serializable... arguments) {
-    final String functionNamePart = buildJsPropertyAccessor(JsPropertyAccessorNotation.DOT, "window", LEAFLET_ADDON_PROPERTY_NAME, functionName);
-    final String functionParametersExpression = buildJsFunctionParametersExpression(IntStream.range(0, arguments.length).toArray());
-    final String functionCallExpression = buildJsFunctionCall(functionNamePart, functionParametersExpression);
-
-    final String expression;
-
-    if(returnType != null) {
-      expression = "return " + functionCallExpression;
-    } else {
-      expression = functionCallExpression;
-    }
-
-    return ui.getPage().executeJs(expression, arguments)
-        .toCompletableFuture(returnType);
-  }
 
   public static String buildJsFunctionParametersExpression(final int... indices) {
     if(indices == null || indices.length == 0) {

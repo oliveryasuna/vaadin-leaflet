@@ -18,13 +18,17 @@
 
 package com.oliveryasuna.vaadin.leaflet;
 
+import com.oliveryasuna.vaadin.leaflet.type.LGridLayer;
 import com.oliveryasuna.vaadin.leaflet.type.LMap;
 import com.oliveryasuna.vaadin.leaflet.type.LTileLayer;
+import com.oliveryasuna.vaadin.leaflet.type.SupportedLeafletPojo;
 import com.oliveryasuna.vaadin.leaflet.util.FrontendUtils;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.dependency.NpmPackage;
 
+import java.io.Serializable;
 import java.util.concurrent.CompletableFuture;
+import java.util.stream.IntStream;
 
 /**
  * Represents {@code L}.
@@ -33,6 +37,32 @@ import java.util.concurrent.CompletableFuture;
  */
 @NpmPackage(value = "leaflet", version = "1.9.0")
 public class Leaflet {
+
+  // Static methods
+  //--------------------------------------------------
+
+  protected static <R extends Serializable> CompletableFuture<R> executeSupportFunction(final UI ui, final Class<R> returnType,
+      final String supportPropertyName, final String functionName, final Serializable... arguments) {
+    final String functionNamePart = FrontendUtils.buildJsPropertyAccessor(FrontendUtils.JsPropertyAccessorNotation.DOT,
+        "window", FrontendUtils.LEAFLET_ADDON_PROPERTY_NAME, "support", supportPropertyName, functionName);
+    final String functionParametersExpression = FrontendUtils.buildJsFunctionParametersExpression(IntStream.range(0, arguments.length).toArray());
+    final String functionCallExpression = FrontendUtils.buildJsFunctionCall(functionNamePart, functionParametersExpression);
+
+    final String expression;
+
+    if(returnType != null) {
+      expression = "return " + functionCallExpression;
+    } else {
+      expression = functionCallExpression;
+    }
+
+    return ui.getPage().executeJs(expression, arguments)
+        .toCompletableFuture(returnType);
+  }
+
+  protected static CompletableFuture<Integer> executeSupportStoreAddFunction(final UI ui, final String supportPropertyName, final Serializable... arguments) {
+    return executeSupportFunction(ui, Integer.class, supportPropertyName, SupportedLeafletPojo.ADD_FUNCTION_NAME, arguments);
+  }
 
   // Singleton
   //--------------------------------------------------
@@ -67,15 +97,22 @@ public class Leaflet {
 
   // TODO: bounds().
 
-  // TODO: gridLayer().
+  public CompletableFuture<LGridLayer> gridLayer(final UI ui) {
+    return executeSupportStoreAddFunction(ui, LGridLayer.SUPPORT_PROPERTY_NAME)
+        .thenApply(id -> LGridLayer.createAndStore(ui, id));
+  }
+
+  // TODO: gridLayer(UI, GridLayerOptions).
 
   public CompletableFuture<LTileLayer> tileLayer(final UI ui, final String urlTemplate) {
-    return FrontendUtils.executeLeafletAddonFunction(ui, int.class, "addTileLayer", urlTemplate)
+    return executeSupportStoreAddFunction(ui, LTileLayer.SUPPORT_PROPERTY_NAME, urlTemplate)
         .thenApply(id -> LTileLayer.createAndStore(ui, id));
   }
 
+  // TODO: tileLayer(UI, String, TileLayerOptions).
+
   public CompletableFuture<LMap> map(final UI ui, final String elementId) {
-    return FrontendUtils.executeLeafletAddonFunction(ui, int.class, "addMap", elementId)
+    return executeSupportStoreAddFunction(ui, LMap.SUPPORT_PROPERTY_NAME, elementId)
         .thenApply(id -> LMap.createAndStore(ui, id));
   }
 

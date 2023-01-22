@@ -21,8 +21,8 @@ package com.oliveryasuna.vaadin.leaflet.type;
 import com.vaadin.flow.component.UI;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.WeakHashMap;
 
 /**
  * Represents the Leaflet API {@code GridLayer} type.
@@ -31,10 +31,15 @@ import java.util.Map;
  */
 public class LGridLayer extends AbstractLGridLayer<LGridLayer> {
 
+  // Static fields
+  //--------------------------------------------------
+
+  public static final String SUPPORT_PROPERTY_NAME = "gridLayer";
+
   // Static instances
   //--------------------------------------------------
 
-  protected static final Map<Integer, LGridLayer> STORE = Collections.synchronizedMap(new HashMap<>());
+  protected static final Map<Integer, LGridLayer> STORE = Collections.synchronizedMap(new WeakHashMap<>());
 
   public static synchronized LGridLayer get(final int id) {
     return STORE.get(id);
@@ -51,11 +56,19 @@ public class LGridLayer extends AbstractLGridLayer<LGridLayer> {
   // Constructors
   //--------------------------------------------------
 
-  public LGridLayer(final UI ui, final int id) {
+  protected LGridLayer(final UI ui, final int id) {
     super(LGridLayer.class, ui, id);
   }
 
-  // TODO: JavaScript constructors.
-  //       Don't forget to create equivalent createAndStore methods.
+  // Methods
+  //--------------------------------------------------
+
+  // Miscellaneous
+  //
+
+  @Override
+  public final String getSupportPropertyName() {
+    return SUPPORT_PROPERTY_NAME;
+  }
 
 }

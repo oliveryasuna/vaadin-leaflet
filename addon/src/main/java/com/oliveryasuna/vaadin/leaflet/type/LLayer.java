@@ -28,7 +28,7 @@ import java.util.concurrent.CompletableFuture;
  * @author Oliver Yasuna
  */
 // TODO: extends LEvented?
-public abstract class LLayer<T extends LLayer<T>> implements StoredLeafletPojo {
+public abstract class LLayer<T extends LLayer<T>> implements SupportedLeafletPojo {
 
   // Constructors
   //--------------------------------------------------
@@ -56,8 +56,11 @@ public abstract class LLayer<T extends LLayer<T>> implements StoredLeafletPojo {
   // Methods
   //--------------------------------------------------
 
+  // JavaScript functions
+  //
+
   public CompletableFuture<T> addTo(final LMap map) {
-    return callJsFunction(getType(), "addTo", StoredLeafletPojo.buildClientSideGetExpression(map))
+    return callJsFunction(getType(), "addTo", SupportedLeafletPojo.buildJsGetExpression(map))
         .thenApply(ignored -> getType().cast(this));
   }
 
