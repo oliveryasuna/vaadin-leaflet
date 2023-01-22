@@ -120,7 +120,11 @@ public class LLatLng implements SupportedLeafletPojo {
         .thenApply(Double.class::cast);
   }
 
-  // TODO: wrap(): LatLng.
+  public CompletableFuture<LLatLng> wrap() {
+    return callJsSupportMethod(Integer.class, "wrap")
+        .thenApply(Integer.class::cast)
+        .thenApply(id -> createAndStore(ui, id));
+  }
 
   // TODO: toBounds(number): LatLngBounds.
 

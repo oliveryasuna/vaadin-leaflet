@@ -20,7 +20,7 @@ import * as L from 'leaflet';
 import {addGridLayer, getGridLayer} from './leaflet-grid-layer';
 import {addMap, getMap} from './leaflet-map';
 import {addTileLayer, getTileLayer} from './leaflet-tile-layer';
-import {addLatLng, getLatLng} from './leaflet-lat-lng';
+import {addLatLng, getLatLng, latLng_wrap} from './leaflet-lat-lng';
 
 interface LeafletAddon {
   support: {
@@ -29,6 +29,15 @@ interface LeafletAddon {
         values: L.LatLng[];
         get: (index: number) => L.LatLng | undefined;
         add: (latitude: number, longitude: number, altitude?: number) => number;
+      },
+      methods: {
+        // TODO: If I write about these support methods,
+        //       note that I specifically chose to lookup by index
+        //       on the client-side, instead of passing the
+        //       expression built on the server-side.
+        //       Why build the expression on the server-side
+        //       and then execute it on the client-side?
+        wrap: (storeIndex: number) => number,
       }
     },
     gridLayer: {
@@ -63,6 +72,9 @@ if(!window.LeafletAddon) {
           values: [],
           get: getLatLng,
           add: addLatLng
+        },
+        methods: {
+          wrap: latLng_wrap
         }
       },
       gridLayer: {

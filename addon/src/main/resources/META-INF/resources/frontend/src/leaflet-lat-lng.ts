@@ -51,7 +51,18 @@ function __addLatLng(latLng: L.LatLng): number {
   return id;
 }
 
+function latLng_wrap(storeIndex: number): number {
+  const latLng: L.LatLng | undefined = getLatLng(storeIndex);
+
+  if(latLng === undefined) {
+    throw new Error('Invalid index.');
+  }
+
+  return __addLatLng(latLng.wrap());
+}
+
 export {
   getLatLng,
-  addLatLng
+  addLatLng,
+  latLng_wrap
 };

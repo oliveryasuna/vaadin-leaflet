@@ -43,6 +43,8 @@ public interface SupportedLeafletPojo extends LeafletPojo {
 
   String ADD_FUNCTION_NAME = "add";
 
+  String METHODS_PROPERTY_NAME = "methods";
+
   // Static methods
   //--------------------------------------------------
 
@@ -57,31 +59,44 @@ public interface SupportedLeafletPojo extends LeafletPojo {
 
   static String buildJsPropertyAccessorExpression(final SupportedLeafletPojo supportedLeafletPojo, final String propertyName) {
     return FrontendUtils.buildJsPropertyAccessor(FrontendUtils.JsPropertyAccessorNotation.DOT,
-        buildJsStoreGetExpression(supportedLeafletPojo), propertyName);
+        buildJsStoreGetExpression(supportedLeafletPojo), propertyName
+    );
   }
 
-  static String buildJsMethodCallExpression(final SupportedLeafletPojo supportedLeafletPojo, final String functionName, final Serializable... arguments) {
+  static String buildJsMethodCallExpression(final SupportedLeafletPojo supportedLeafletPojo, final String methodName, final Serializable... arguments) {
     return FrontendUtils.buildJsFunctionCall(
         FrontendUtils.buildJsPropertyAccessor(FrontendUtils.JsPropertyAccessorNotation.DOT,
-            buildJsStoreGetExpression(supportedLeafletPojo), functionName),
+            buildJsStoreGetExpression(supportedLeafletPojo), methodName),
         FrontendUtils.buildJsFunctionParametersExpression(IntStream.range(0, arguments.length).toArray())
     );
   }
 
-  static String buildJsMethodCall(final SupportedLeafletPojo supportedLeafletPojo, final String functionName, final String rawArguments) {
+  static String buildJsMethodCall(final SupportedLeafletPojo supportedLeafletPojo, final String methodName, final String rawArguments) {
     return FrontendUtils.buildJsFunctionCall(
         FrontendUtils.buildJsPropertyAccessor(FrontendUtils.JsPropertyAccessorNotation.DOT,
-            buildJsStoreGetExpression(supportedLeafletPojo), functionName),
+            buildJsStoreGetExpression(supportedLeafletPojo), methodName),
         rawArguments
     );
   }
 
-  static String buildJsSupportMethodCall(final SupportedLeafletPojo supportedLeafletPojo, final String functionName, final Serializable... arguments) {
+  static String buildJsSupportMethodCall(final SupportedLeafletPojo supportedLeafletPojo, final String methodName, final Serializable... arguments) {
     return FrontendUtils.buildJsFunctionCall(
         FrontendUtils.buildJsPropertyAccessor(FrontendUtils.JsPropertyAccessorNotation.DOT,
             "window", FrontendUtils.LEAFLET_ADDON_PROPERTY_NAME, SUPPORT_PROPERTY_NAME, supportedLeafletPojo.getSupportPropertyName(),
-            STORE_PROPERTY_NAME, GET_FUNCTION_NAME),
-        supportedLeafletPojo.getId()
+            METHODS_PROPERTY_NAME, methodName),
+        supportedLeafletPojo.getId() +
+            ((arguments != null && arguments.length > 0)
+                ? "," + FrontendUtils.buildJsFunctionParametersExpression(IntStream.range(0, arguments.length).toArray())
+                : "")
+    );
+  }
+
+  static String buildJsSupportMethodCall(final SupportedLeafletPojo supportedLeafletPojo, final String methodName, final String rawArguments) {
+    return FrontendUtils.buildJsFunctionCall(
+        FrontendUtils.buildJsPropertyAccessor(FrontendUtils.JsPropertyAccessorNotation.DOT,
+            "window", FrontendUtils.LEAFLET_ADDON_PROPERTY_NAME, SUPPORT_PROPERTY_NAME, supportedLeafletPojo.getSupportPropertyName(),
+            METHODS_PROPERTY_NAME, methodName),
+        supportedLeafletPojo.getId() + ((rawArguments != null && !rawArguments.isEmpty()) ? "," + rawArguments : "")
     );
   }
 
@@ -118,6 +133,23 @@ public interface SupportedLeafletPojo extends LeafletPojo {
   }
 
   default CompletableFuture<?> callJsSupportMethod(final Class<?> returnType, final String methodName, final Serializable... arguments) {
+    final PendingJavaScriptResult result = getUi().getPage().executeJs(buildJsSupportMethodCall(this, methodName, arguments), arguments);
+
+    if(returnType != null) {
+      return result.toCompletableFuture(returnType);
+    } else {
+      return result.toCompletableFuture();
+    }
+  }
+
+  default CompletableFuture<?> callJsSupportMethod(final Class<?> returnType, final String methodName, final String rawArguments) {
+    final PendingJavaScriptResult result = getUi().getPage().executeJs(buildJsSupportMethodCall(this, methodName, rawArguments));
+
+    if(returnType != null) {
+      return result.toCompletableFuture(returnType);
+    } else {
+      return result.toCompletableFuture();
+    }
   }
 
   String getSupportPropertyName();
