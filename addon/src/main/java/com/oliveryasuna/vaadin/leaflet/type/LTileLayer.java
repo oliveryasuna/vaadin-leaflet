@@ -46,11 +46,11 @@ public class LTileLayer extends AbstractLGridLayer<LTileLayer> {
   }
 
   public static synchronized LTileLayer createAndStore(final UI ui, final int id) {
-    final LTileLayer map = new LTileLayer(ui, id);
+    final LTileLayer tileLayer = new LTileLayer(ui, id);
 
-    STORE.put(id, map);
+    STORE.put(id, tileLayer);
 
-    return map;
+    return tileLayer;
   }
 
   // Constructors

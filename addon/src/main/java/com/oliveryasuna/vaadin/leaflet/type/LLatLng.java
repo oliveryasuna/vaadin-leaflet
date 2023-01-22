@@ -49,11 +49,11 @@ public class LLatLng implements SupportedLeafletPojo {
   }
 
   public static synchronized LLatLng createAndStore(final UI ui, final int id) {
-    final LLatLng map = new LLatLng(ui, id);
+    final LLatLng latLng = new LLatLng(ui, id);
 
-    STORE.put(id, map);
+    STORE.put(id, latLng);
 
-    return map;
+    return latLng;
   }
 
   // Constructors

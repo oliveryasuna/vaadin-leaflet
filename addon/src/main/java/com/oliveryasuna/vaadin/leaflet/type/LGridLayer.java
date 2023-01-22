@@ -46,11 +46,11 @@ public class LGridLayer extends AbstractLGridLayer<LGridLayer> {
   }
 
   public static synchronized LGridLayer createAndStore(final UI ui, final int id) {
-    final LGridLayer map = new LGridLayer(ui, id);
+    final LGridLayer gridLayer = new LGridLayer(ui, id);
 
-    STORE.put(id, map);
+    STORE.put(id, gridLayer);
 
-    return map;
+    return gridLayer;
   }
 
   // Constructors
