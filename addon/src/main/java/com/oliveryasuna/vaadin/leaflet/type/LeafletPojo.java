@@ -24,7 +24,7 @@ import java.io.Serializable;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * Base class for classes that represent Leaflet API types with callable JavaScript functions.
+ * Base class for classes that represent Leaflet API types with callable JavaScript methods.
  *
  * @author Oliver Yasuna
  */
@@ -35,9 +35,9 @@ public interface LeafletPojo {
 
   <T extends Serializable> CompletableFuture<T> getJsProperty(final Class<T> type, final String propertyName);
 
-  CompletableFuture<?> callJsFunction(final Class<?> returnType, final String functionName, final Serializable... arguments);
+  CompletableFuture<?> callJsMethod(final Class<?> returnType, final String methodName, final Serializable... arguments);
 
-  CompletableFuture<?> callJsFunction(final Class<?> returnType, final String functionName, final String rawArguments);
+  CompletableFuture<?> callJsMethod(final Class<?> returnType, final String methodName, final String rawArguments);
 
   UI getUi();
 

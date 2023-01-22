@@ -56,11 +56,11 @@ public abstract class LLayer<T extends LLayer<T>> implements SupportedLeafletPoj
   // Methods
   //--------------------------------------------------
 
-  // JavaScript functions
+  // JavaScript methods
   //
 
   public CompletableFuture<T> addTo(final LMap map) {
-    return callJsFunction(getType(), "addTo", SupportedLeafletPojo.buildJsGetExpression(map))
+    return callJsMethod(getType(), "addTo", SupportedLeafletPojo.buildJsGetExpression(map))
         .thenApply(ignored -> getType().cast(this));
   }
 

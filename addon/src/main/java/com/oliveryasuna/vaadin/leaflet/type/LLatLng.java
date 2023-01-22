@@ -91,32 +91,32 @@ public class LLatLng implements SupportedLeafletPojo {
     return getJsProperty(Double.class, "alt");
   }
 
-  // JavaScript functions
+  // JavaScript methods
   //
 
   public CompletableFuture<Boolean> jsEquals(final LLatLngExpression otherLatLng) {
     final JsonValue otherLatLngJson = SerializationUtils.toElementalValue(otherLatLng);
 
-    return callJsFunction(Boolean.class, "equals", otherLatLngJson)
+    return callJsMethod(Boolean.class, "equals", otherLatLngJson)
         .thenApply(Boolean.class::cast);
   }
 
   public CompletableFuture<Boolean> jsEquals(final LLatLngExpression otherLatLng, final double maxMargin) {
     final JsonValue otherLatLngJson = SerializationUtils.toElementalValue(otherLatLng);
 
-    return callJsFunction(Boolean.class, "equals", otherLatLngJson, maxMargin)
+    return callJsMethod(Boolean.class, "equals", otherLatLngJson, maxMargin)
         .thenApply(Boolean.class::cast);
   }
 
   public CompletableFuture<String> jsToString() {
-    return callJsFunction(String.class, "toString")
+    return callJsMethod(String.class, "toString")
         .thenApply(String.class::cast);
   }
 
   public CompletableFuture<Double> distanceTo(final LLatLngExpression otherLatLng) {
     final JsonValue otherLatLngJson = SerializationUtils.toElementalValue(otherLatLng);
 
-    return callJsFunction(Double.class, "distanceTo", otherLatLngJson)
+    return callJsMethod(Double.class, "distanceTo", otherLatLngJson)
         .thenApply(Double.class::cast);
   }
 

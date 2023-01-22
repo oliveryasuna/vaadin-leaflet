@@ -80,7 +80,7 @@ public class LMap implements SupportedLeafletPojo {
   // TODO: JavaScript properties
   //
 
-  // JavaScript functions
+  // JavaScript methods
   //
 
   // TODO: Many more methods.
@@ -88,14 +88,14 @@ public class LMap implements SupportedLeafletPojo {
   public CompletableFuture<LMap> setView(final LLatLngExpression center) {
     final JsonValue centerJson = SerializationUtils.toElementalValue(center);
 
-    return callJsFunction(null, "setView", centerJson)
+    return callJsMethod(null, "setView", centerJson)
         .thenApply(ignored -> this);
   }
 
   public CompletableFuture<LMap> setView(final LLatLngExpression center, final double zoom) {
     final JsonValue centerJson = SerializationUtils.toElementalValue(center);
 
-    return callJsFunction(null, "setView", centerJson, zoom)
+    return callJsMethod(null, "setView", centerJson, zoom)
         .thenApply(ignored -> this);
   }
 
@@ -103,7 +103,7 @@ public class LMap implements SupportedLeafletPojo {
     final JsonValue centerJson = SerializationUtils.toElementalValue(center);
     final JsonValue optionsJson = SerializationUtils.toElementalValue(options);
 
-    return callJsFunction(null, "setView", centerJson, zoom, optionsJson)
+    return callJsMethod(null, "setView", centerJson, zoom, optionsJson)
         .thenApply(ignored -> this);
   }
 

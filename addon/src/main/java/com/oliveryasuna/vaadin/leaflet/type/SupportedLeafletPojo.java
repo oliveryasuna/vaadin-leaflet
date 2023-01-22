@@ -57,7 +57,7 @@ public interface SupportedLeafletPojo extends LeafletPojo {
         buildJsGetExpression(supportedLeafletPojo), propertyName);
   }
 
-  static String buildJsFunctionCallExpression(final SupportedLeafletPojo supportedLeafletPojo, final String functionName, final Serializable... arguments) {
+  static String buildJsMethodCallExpression(final SupportedLeafletPojo supportedLeafletPojo, final String functionName, final Serializable... arguments) {
     return FrontendUtils.buildJsFunctionCall(
         FrontendUtils.buildJsPropertyAccessor(FrontendUtils.JsPropertyAccessorNotation.DOT,
             buildJsGetExpression(supportedLeafletPojo), functionName),
@@ -65,7 +65,7 @@ public interface SupportedLeafletPojo extends LeafletPojo {
     );
   }
 
-  static String buildJsFunctionCall(final SupportedLeafletPojo supportedLeafletPojo, final String functionName, final String rawArguments) {
+  static String buildJsMethodCall(final SupportedLeafletPojo supportedLeafletPojo, final String functionName, final String rawArguments) {
     return FrontendUtils.buildJsFunctionCall(
         FrontendUtils.buildJsPropertyAccessor(FrontendUtils.JsPropertyAccessorNotation.DOT,
             buildJsGetExpression(supportedLeafletPojo), functionName),
@@ -83,8 +83,8 @@ public interface SupportedLeafletPojo extends LeafletPojo {
   }
 
   @Override
-  default CompletableFuture<?> callJsFunction(final Class<?> returnType, final String functionName, final Serializable... arguments) {
-    final PendingJavaScriptResult result = getUi().getPage().executeJs(buildJsFunctionCallExpression(this, functionName, arguments), arguments);
+  default CompletableFuture<?> callJsMethod(final Class<?> returnType, final String methodName, final Serializable... arguments) {
+    final PendingJavaScriptResult result = getUi().getPage().executeJs(buildJsMethodCallExpression(this, methodName, arguments), arguments);
 
     if(returnType != null) {
       return result.toCompletableFuture(returnType);
@@ -94,8 +94,8 @@ public interface SupportedLeafletPojo extends LeafletPojo {
   }
 
   @Override
-  default CompletableFuture<?> callJsFunction(final Class<?> returnType, final String functionName, final String rawArguments) {
-    final PendingJavaScriptResult result = getUi().getPage().executeJs(buildJsFunctionCall(this, functionName, rawArguments));
+  default CompletableFuture<?> callJsMethod(final Class<?> returnType, final String methodName, final String rawArguments) {
+    final PendingJavaScriptResult result = getUi().getPage().executeJs(buildJsMethodCall(this, methodName, rawArguments));
 
     // TODO: Report invalid inspection to JetBrains.
     if(returnType != null) {
