@@ -38,10 +38,12 @@ function getMap(index: number): L.Map | undefined {
  * @return The index of the {@link L.Map} in the store.
  */
 function addMap(elementId: string, options?: L.MapOptions): number {
-  const store: L.Map[] = window.LeafletAddon.support.map.store;
+  return __addMap(L.map(elementId, options));
+}
 
+function __addMap(map: L.Map): number {
+  const store: L.Map[] = window.LeafletAddon.support.map.store;
   const id: number = store.length;
-  const map: L.Map = L.map(elementId, options);
 
   store.push(map);
 

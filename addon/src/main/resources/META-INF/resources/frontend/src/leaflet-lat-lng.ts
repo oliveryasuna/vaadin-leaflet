@@ -39,10 +39,12 @@ function getLatLng(index: number): L.LatLng | undefined {
  * @return The index of the {@link L.LatLng} in the store.
  */
 function addLatLng(latitude: number, longitude: number, altitude?: number): number {
-  const store: L.LatLng[] = window.LeafletAddon.support.latLng.store;
+  return __addLatLng(L.latLng(latitude, longitude, altitude));
+}
 
+function __addLatLng(latLng: L.LatLng): number {
+  const store: L.LatLng[] = window.LeafletAddon.support.latLng.store;
   const id: number = store.length;
-  const latLng: L.LatLng = L.latLng(latitude, longitude, altitude);
 
   store.push(latLng);
 

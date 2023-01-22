@@ -37,10 +37,12 @@ function getGridLayer(index: number): L.GridLayer | undefined {
  * @return The index of the {@link L#GridLayer} in the store.
  */
 function addGridLayer(options?: L.GridLayerOptions): number {
-  const store: L.GridLayer[] = window.LeafletAddon.support.gridLayer.store;
+  return __addGridLayer(L.gridLayer(options));
+}
 
+function __addGridLayer(gridLayer: L.GridLayer): number {
+  const store: L.GridLayer[] = window.LeafletAddon.support.gridLayer.store;
   const id: number = store.length;
-  const gridLayer: L.GridLayer = L.gridLayer(options);
 
   store.push(gridLayer);
 

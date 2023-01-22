@@ -38,10 +38,12 @@ function getTileLayer(index: number): L.TileLayer | undefined {
  * @return The index of the {@link L.TileLayer} in the store.
  */
 function addTileLayer(urlTemplate: string, options?: L.TileLayerOptions): number {
-  const store: L.TileLayer[] = window.LeafletAddon.support.tileLayer.store;
+  return __addTileLayer(L.tileLayer(urlTemplate, options));
+}
 
+function __addTileLayer(tileLayer: L.TileLayer): number {
+  const store: L.TileLayer[] = window.LeafletAddon.support.tileLayer.store;
   const id: number = store.length;
-  const tileLayer: L.TileLayer = L.tileLayer(urlTemplate, options);
 
   store.push(tileLayer);
 
