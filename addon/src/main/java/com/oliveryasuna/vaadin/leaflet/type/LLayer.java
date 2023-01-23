@@ -19,6 +19,7 @@
 package com.oliveryasuna.vaadin.leaflet.type;
 
 import com.vaadin.flow.component.UI;
+import elemental.json.JsonValue;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -60,7 +61,7 @@ public abstract class LLayer<T extends LLayer<T>> implements SupportedLeafletPoj
   //
 
   public CompletableFuture<T> addTo(final LMap map) {
-    return callJsMethodRawArguments(getType(), "addTo", SupportedLeafletPojo.buildJsStoreGetExpression(map))
+    return callJsMethodRawArguments(JsonValue.class, "addTo", SupportedLeafletPojo.buildJsStoreGetExpression(map))
         .thenApply(ignored -> getType().cast(this));
   }
 

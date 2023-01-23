@@ -18,11 +18,14 @@
 
 package com.oliveryasuna.vaadin.leaflet.type;
 
+import com.oliveryasuna.vaadin.leaflet.util.SerializationUtils;
 import com.vaadin.flow.component.UI;
+import elemental.json.JsonValue;
 
 import java.util.Collections;
 import java.util.Map;
 import java.util.WeakHashMap;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * Represents the Leaflet API {@code Marker} type.
@@ -63,11 +66,38 @@ public class LMarker extends LLayer<LMarker> {
   // Methods
   //--------------------------------------------------
 
-  // TODO: JavaScript properties
+  // JavaScript properties
   //
 
-  // TODO: JavaScript methods
+  // TODO: options.
+
+  // TODO: dragging.
+
+  // TODO: feature.
+
+  // JavaScript methods
   //
+
+  // TODO: toGeoJSON().
+
+  // TODO: getLatLng().
+
+  public CompletableFuture<LMarker> setLatLng(final LLatLngExpression latLng) {
+    final JsonValue latLngJson = SerializationUtils.toElementalValue(latLng);
+
+    return callJsMethod(JsonValue.class, "setLatLng", latLngJson)
+        .thenApply(ignored -> this);
+  }
+
+  // TODO: setZIndexOffset().
+
+  // TODO: getIcon().
+
+  // TODO: setIcon().
+
+  // TOOD: setOpacity().
+
+  // TODO: getElement().
 
   // Miscellaneous
   //
