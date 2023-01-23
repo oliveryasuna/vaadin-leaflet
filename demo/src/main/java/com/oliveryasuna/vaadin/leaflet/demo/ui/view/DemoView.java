@@ -25,15 +25,12 @@ import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 
 @Route("")
-@JsModule("leaflet/dist/leaflet.js")
-@CssImport("leaflet/dist/leaflet.css")
 @JsModule("./src/vaadin-leaflet-addon.ts")
 public class DemoView extends Composite<VerticalLayout> {
 

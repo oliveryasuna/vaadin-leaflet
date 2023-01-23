@@ -17,6 +17,7 @@
  */
 
 import * as L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
 import {addGridLayer, getGridLayer} from './leaflet-grid-layer';
 import {addMap, getMap} from './leaflet-map';
 import {addTileLayer, getTileLayer} from './leaflet-tile-layer';
