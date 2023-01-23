@@ -3,7 +3,7 @@
 [//]: # (TODO: Vaadin Directory version.)
 [//]: # (TODO: Vaadin Directory stars.)
 
-[Leaflet](https://leafletjs.com/) map component for Vaadin Flow.
+[Leaflet](https://leafletjs.com/) map component and utilities for Vaadin Flow.
 
 ## Prerequisites
 
