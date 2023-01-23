@@ -21,6 +21,7 @@ import {addGridLayer, getGridLayer} from './leaflet-grid-layer';
 import {addMap, getMap} from './leaflet-map';
 import {addTileLayer, getTileLayer} from './leaflet-tile-layer';
 import {addLatLng, getLatLng, latLng_wrap} from './leaflet-lat-lng';
+import {addMarker, getMarker} from './leaflet-marker';
 
 interface LeafletAddon {
   support: {
@@ -60,6 +61,13 @@ interface LeafletAddon {
         get: (index: number) => L.Map | undefined;
         add: (elementId: string, options?: L.MapOptions) => number;
       }
+    },
+    marker: {
+      store: {
+        values: L.Marker[];
+        get: (index: number) => L.Marker | undefined;
+        add: (latLng: L.LatLngExpression, options?: L.MarkerOptions) => number;
+      }
     }
   };
 }
@@ -96,6 +104,13 @@ if(!window.LeafletAddon) {
           values: [],
           get: getMap,
           add: addMap
+        }
+      },
+      marker: {
+        store: {
+          values: [],
+          get: getMarker,
+          add: addMarker
         }
       }
     }

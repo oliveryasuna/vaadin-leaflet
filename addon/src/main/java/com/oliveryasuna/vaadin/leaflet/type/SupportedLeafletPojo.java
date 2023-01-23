@@ -71,7 +71,7 @@ public interface SupportedLeafletPojo extends LeafletPojo {
     );
   }
 
-  static String buildJsMethodCall(final SupportedLeafletPojo supportedLeafletPojo, final String methodName, final String rawArguments) {
+  static String buildJsMethodCallRawArguments(final SupportedLeafletPojo supportedLeafletPojo, final String methodName, final String rawArguments) {
     return FrontendUtils.buildJsFunctionCall(
         FrontendUtils.buildJsPropertyAccessor(FrontendUtils.JsPropertyAccessorNotation.DOT,
             buildJsStoreGetExpression(supportedLeafletPojo), methodName),
@@ -91,7 +91,7 @@ public interface SupportedLeafletPojo extends LeafletPojo {
     );
   }
 
-  static String buildJsSupportMethodCall(final SupportedLeafletPojo supportedLeafletPojo, final String methodName, final String rawArguments) {
+  static String buildJsSupportMethodCallRawArguments(final SupportedLeafletPojo supportedLeafletPojo, final String methodName, final String rawArguments) {
     return FrontendUtils.buildJsFunctionCall(
         FrontendUtils.buildJsPropertyAccessor(FrontendUtils.JsPropertyAccessorNotation.DOT,
             "window", FrontendUtils.LEAFLET_ADDON_PROPERTY_NAME, SUPPORT_PROPERTY_NAME, supportedLeafletPojo.getSupportPropertyName(),
@@ -121,8 +121,8 @@ public interface SupportedLeafletPojo extends LeafletPojo {
   }
 
   @Override
-  default CompletableFuture<?> callJsMethod(final Class<?> returnType, final String methodName, final String rawArguments) {
-    final PendingJavaScriptResult result = getUi().getPage().executeJs(buildJsMethodCall(this, methodName, rawArguments));
+  default CompletableFuture<?> callJsMethodRawArguments(final Class<?> returnType, final String methodName, final String rawArguments) {
+    final PendingJavaScriptResult result = getUi().getPage().executeJs(buildJsMethodCallRawArguments(this, methodName, rawArguments));
 
     // TODO: Report invalid inspection to JetBrains.
     if(returnType != null) {
@@ -142,8 +142,8 @@ public interface SupportedLeafletPojo extends LeafletPojo {
     }
   }
 
-  default CompletableFuture<?> callJsSupportMethod(final Class<?> returnType, final String methodName, final String rawArguments) {
-    final PendingJavaScriptResult result = getUi().getPage().executeJs(buildJsSupportMethodCall(this, methodName, rawArguments));
+  default CompletableFuture<?> callJsSupportMethodRawArguments(final Class<?> returnType, final String methodName, final String rawArguments) {
+    final PendingJavaScriptResult result = getUi().getPage().executeJs(buildJsSupportMethodCallRawArguments(this, methodName, rawArguments));
 
     if(returnType != null) {
       return result.toCompletableFuture(returnType);

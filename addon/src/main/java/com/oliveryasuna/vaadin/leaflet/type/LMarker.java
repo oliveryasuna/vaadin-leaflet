@@ -20,27 +20,61 @@ package com.oliveryasuna.vaadin.leaflet.type;
 
 import com.vaadin.flow.component.UI;
 
-import java.io.Serializable;
-import java.util.concurrent.CompletableFuture;
+import java.util.Collections;
+import java.util.Map;
+import java.util.WeakHashMap;
 
 /**
- * Base class for classes that represent Leaflet API types with callable JavaScript methods.
+ * Represents the Leaflet API {@code Marker} type.
  *
  * @author Oliver Yasuna
  */
-public interface LeafletPojo {
+public class LMarker extends LLayer<LMarker> {
+
+  // Static fields
+  //--------------------------------------------------
+
+  public static final String SUPPORT_PROPERTY_NAME = "marker";
+
+  // Static instances
+  //--------------------------------------------------
+
+  protected static final Map<Integer, LMarker> STORE = Collections.synchronizedMap(new WeakHashMap<>());
+
+  public static synchronized LMarker get(final int id) {
+    return STORE.get(id);
+  }
+
+  public static synchronized LMarker createAndStore(final UI ui, final int id) {
+    final LMarker latLng = new LMarker(ui, id);
+
+    STORE.put(id, latLng);
+
+    return latLng;
+  }
+
+  // Constructors
+  //--------------------------------------------------
+
+  protected LMarker(final UI ui, final int id) {
+    super(LMarker.class, ui, id);
+  }
 
   // Methods
   //--------------------------------------------------
 
-  <T extends Serializable> CompletableFuture<T> getJsProperty(final Class<T> type, final String propertyName);
+  // TODO: JavaScript properties
+  //
 
-  CompletableFuture<?> callJsMethod(final Class<?> returnType, final String methodName, final Serializable... arguments);
+  // TODO: JavaScript methods
+  //
 
-  CompletableFuture<?> callJsMethodRawArguments(final Class<?> returnType, final String methodName, final String rawArguments);
+  // Miscellaneous
+  //
 
-  UI getUi();
-
-  int getId();
+  @Override
+  public String getSupportPropertyName() {
+    return SUPPORT_PROPERTY_NAME;
+  }
 
 }

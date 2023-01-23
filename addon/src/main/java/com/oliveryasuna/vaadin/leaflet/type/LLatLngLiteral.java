@@ -52,6 +52,7 @@ public class LLatLngLiteral implements LLatLngExpression {
   @JsonProperty("lng")
   private double lng;
 
+
   // Getters/setters
   //--------------------------------------------------
 

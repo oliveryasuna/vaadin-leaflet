@@ -16,31 +16,41 @@
  * TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.oliveryasuna.vaadin.leaflet.type;
-
-import com.vaadin.flow.component.UI;
-
-import java.io.Serializable;
-import java.util.concurrent.CompletableFuture;
+import * as L from 'leaflet';
 
 /**
- * Base class for classes that represent Leaflet API types with callable JavaScript methods.
+ * Gets the {@link L.Marker} at the given index.
  *
- * @author Oliver Yasuna
+ * @param index The index of the {@link L.Marker} in the store.
+ *
+ * @return The {@link L.Marker} at the given index, or `undefined` if the index is out of bounds.
  */
-public interface LeafletPojo {
-
-  // Methods
-  //--------------------------------------------------
-
-  <T extends Serializable> CompletableFuture<T> getJsProperty(final Class<T> type, final String propertyName);
-
-  CompletableFuture<?> callJsMethod(final Class<?> returnType, final String methodName, final Serializable... arguments);
-
-  CompletableFuture<?> callJsMethodRawArguments(final Class<?> returnType, final String methodName, final String rawArguments);
-
-  UI getUi();
-
-  int getId();
-
+function getMarker(index: number): L.Marker | undefined {
+  return window.LeafletAddon.support.marker.store.values[index];
 }
+
+/**
+ * Creates and adds a {@link L.Marker} to the store.
+ *
+ * @param latLng The coordinates.
+ * @param options The options.
+ *
+ * @return The index of the {@link L.Marker} in the store.
+ */
+function addMarker(latLng: L.LatLngExpression, options?: L.MarkerOptions): number {
+  return __addMarker(L.marker(latLng, options));
+}
+
+function __addMarker(marker: L.Marker): number {
+  const store: L.Marker[] = window.LeafletAddon.support.marker.store.values;
+  const id: number = store.length;
+
+  store.push(marker);
+
+  return id;
+}
+
+export {
+  getMarker,
+  addMarker
+};

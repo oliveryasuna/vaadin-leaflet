@@ -20,8 +20,10 @@ package com.oliveryasuna.vaadin.leaflet;
 
 import com.oliveryasuna.vaadin.leaflet.type.*;
 import com.oliveryasuna.vaadin.leaflet.util.FrontendUtils;
+import com.oliveryasuna.vaadin.leaflet.util.SerializationUtils;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.dependency.NpmPackage;
+import elemental.json.JsonValue;
 
 import java.io.Serializable;
 import java.util.concurrent.CompletableFuture;
@@ -33,6 +35,7 @@ import java.util.stream.IntStream;
  * @author Oliver Yasuna
  */
 @NpmPackage(value = "leaflet", version = "1.9.0")
+@NpmPackage(value = "@types/leaflet", version = "1.9.0")
 public class Leaflet {
 
   // Static methods
@@ -57,6 +60,24 @@ public class Leaflet {
         .toCompletableFuture(returnType);
   }
 
+  protected static <R extends Serializable> CompletableFuture<R> executeSupportFunctionRawArguments(final UI ui, final Class<R> returnType,
+      final String supportPropertyName, final String functionName, final String rawArguments) {
+    final String functionNamePart = FrontendUtils.buildJsPropertyAccessor(FrontendUtils.JsPropertyAccessorNotation.DOT,
+        "window", FrontendUtils.LEAFLET_ADDON_PROPERTY_NAME, "support", supportPropertyName, functionName);
+    final String functionCallExpression = FrontendUtils.buildJsFunctionCall(functionNamePart, rawArguments);
+
+    final String expression;
+
+    if(returnType != null) {
+      expression = "return " + functionCallExpression;
+    } else {
+      expression = functionCallExpression;
+    }
+
+    return ui.getPage().executeJs(expression)
+        .toCompletableFuture(returnType);
+  }
+
   protected static CompletableFuture<Integer> executeSupportStoreAddFunction(final UI ui, final String supportPropertyName, final Serializable... arguments) {
     return executeSupportFunction(
         ui,
@@ -65,6 +86,16 @@ public class Leaflet {
         FrontendUtils.buildJsPropertyAccessor(FrontendUtils.JsPropertyAccessorNotation.DOT,
             SupportedLeafletPojo.STORE_PROPERTY_NAME, SupportedLeafletPojo.ADD_FUNCTION_NAME),
         arguments);
+  }
+
+  protected static CompletableFuture<Integer> executeSupportStoreAddFunctionRawArguments(final UI ui, final String supportPropertyName, final String rawArguments) {
+    return executeSupportFunctionRawArguments(
+        ui,
+        Integer.class,
+        supportPropertyName,
+        FrontendUtils.buildJsPropertyAccessor(FrontendUtils.JsPropertyAccessorNotation.DOT,
+            SupportedLeafletPojo.STORE_PROPERTY_NAME, SupportedLeafletPojo.ADD_FUNCTION_NAME),
+        rawArguments);
   }
 
   // Singleton
@@ -131,6 +162,18 @@ public class Leaflet {
 
   // TODO: map(UI, String, MapOptions).
 
-  // TODO: More functions.
+  // TODO: icon(IconOptions).
+
+  // TODO: divIcon().
+  // TODO: divIcon(DivIconOptions).
+
+  public CompletableFuture<LMarker> marker(final UI ui, final LLatLngExpression latLng) {
+    final JsonValue latLngJson = SerializationUtils.toElementalValue(latLng);
+
+    return executeSupportStoreAddFunction(ui, LMarker.SUPPORT_PROPERTY_NAME, latLngJson)
+        .thenApply(id -> LMarker.createAndStore(ui, id));
+  }
+
+  // TODO: marker(LatLngExpression, MarkerOptions).
 
 }
