@@ -16,7 +16,7 @@
  * TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.oliveryasuna.vaadin.leaflet.type;
+package com.oliveryasuna.vaadin.leaflet.js;
 
 import com.oliveryasuna.vaadin.leaflet.util.SerializationUtils;
 import com.vaadin.flow.component.UI;

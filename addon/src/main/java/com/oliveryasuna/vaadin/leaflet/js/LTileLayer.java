@@ -16,31 +16,65 @@
  * TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.oliveryasuna.vaadin.leaflet.type;
+package com.oliveryasuna.vaadin.leaflet.js;
 
 import com.vaadin.flow.component.UI;
 
-import java.io.Serializable;
-import java.util.concurrent.CompletableFuture;
+import java.util.Collections;
+import java.util.Map;
+import java.util.WeakHashMap;
 
 /**
- * Base class for classes that represent Leaflet API types with callable JavaScript methods.
+ * Represents the Leaflet API {@code TileLayer} type.
  *
  * @author Oliver Yasuna
  */
-public interface LeafletPojo {
+public class LTileLayer extends AbstractLGridLayer<LTileLayer> {
+
+  // Static fields
+  //--------------------------------------------------
+
+  public static final String SUPPORT_PROPERTY_NAME = "tileLayer";
+
+  // Static instances
+  //--------------------------------------------------
+
+  protected static final Map<Integer, LTileLayer> STORE = Collections.synchronizedMap(new WeakHashMap<>());
+
+  public static synchronized LTileLayer get(final int id) {
+    return STORE.get(id);
+  }
+
+  public static synchronized LTileLayer createAndStore(final UI ui, final int id) {
+    final LTileLayer tileLayer = new LTileLayer(ui, id);
+
+    STORE.put(id, tileLayer);
+
+    return tileLayer;
+  }
+
+  // Constructors
+  //--------------------------------------------------
+
+  protected LTileLayer(final UI ui, final int id) {
+    super(LTileLayer.class, ui, id);
+  }
 
   // Methods
   //--------------------------------------------------
 
-  <T extends Serializable> CompletableFuture<T> getJsProperty(final Class<T> type, final String propertyName);
+  // TODO: JavaScript properties.
+  //
 
-  CompletableFuture<?> callJsMethod(final Class<?> returnType, final String methodName, final Serializable... arguments);
+  // TODO: JavaScript methods.
+  //
 
-  CompletableFuture<?> callJsMethodRawArguments(final Class<?> returnType, final String methodName, final String rawArguments);
+  // Miscellaneous
+  //
 
-  UI getUi();
-
-  int getId();
+  @Override
+  public String getSupportPropertyName() {
+    return SUPPORT_PROPERTY_NAME;
+  }
 
 }

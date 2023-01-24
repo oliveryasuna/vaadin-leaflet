@@ -16,90 +16,74 @@
  * TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.oliveryasuna.vaadin.leaflet.type;
+package com.oliveryasuna.vaadin.leaflet.js;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Builder;
+import com.vaadin.flow.component.UI;
+import elemental.json.JsonValue;
 
-import java.io.Serializable;
+import java.util.concurrent.CompletableFuture;
 
 /**
- * Represents the Leaflet API {@code PanOptions} type.
+ * Represents the Leaflet API {@code Layer} type.
  *
  * @author Oliver Yasuna
  */
-public class LPanOptions implements Serializable {
+// TODO: extends LEvented?
+public abstract class LLayer<T extends LLayer<T>> implements SupportedLeafletPojo {
 
   // Constructors
   //--------------------------------------------------
 
-  public LPanOptions() {
+  protected LLayer(final Class<T> type, final UI ui, final int id) {
     super();
+
+    this.type = type;
+
+    this.ui = ui;
+    this.id = id;
   }
 
-  @Builder
-  public LPanOptions(final Boolean animate, final Double duration, final Double easeLinearity, final Boolean noMoveStart) {
-    this();
-
-    this.animate = animate;
-    this.duration = duration;
-    this.easeLinearity = easeLinearity;
-    this.noMoveStart = noMoveStart;
-  }
+  // TODO: JavaScript constructors.
 
   // Fields
   //--------------------------------------------------
 
-  @JsonProperty("animate")
-  @JsonInclude(JsonInclude.Include.NON_NULL)
-  private Boolean animate;
+  private final Class<T> type;
 
-  @JsonProperty("duration")
-  @JsonInclude(JsonInclude.Include.NON_NULL)
-  private Double duration;
+  private final UI ui;
 
-  @JsonProperty("easeLinearity")
-  @JsonInclude(JsonInclude.Include.NON_NULL)
-  private Double easeLinearity;
+  private final int id;
 
-  @JsonProperty("noMoveStart")
-  @JsonInclude(JsonInclude.Include.NON_NULL)
-  private Boolean noMoveStart;
+  // Methods
+  //--------------------------------------------------
+
+  // JavaScript methods
+  //
+
+  public CompletableFuture<T> addTo(final LMap map) {
+    return callJsMethodRawArguments(JsonValue.class, "addTo", SupportedLeafletPojo.buildJsStoreGetExpression(map))
+        .thenApply(ignored -> getType().cast(this));
+  }
+
+  // TODO: addTo(LayerGroup).
+
+  // TODO: More methods.
 
   // Getters/setters
   //--------------------------------------------------
 
-  public Boolean getAnimate() {
-    return animate;
+  public Class<T> getType() {
+    return type;
   }
 
-  public void setAnimate(final Boolean animate) {
-    this.animate = animate;
+  @Override
+  public UI getUi() {
+    return ui;
   }
 
-  public Double getDuration() {
-    return duration;
-  }
-
-  public void setDuration(final Double duration) {
-    this.duration = duration;
-  }
-
-  public Double getEaseLinearity() {
-    return easeLinearity;
-  }
-
-  public void setEaseLinearity(final Double easeLinearity) {
-    this.easeLinearity = easeLinearity;
-  }
-
-  public Boolean getNoMoveStart() {
-    return noMoveStart;
-  }
-
-  public void setNoMoveStart(final Boolean noMoveStart) {
-    this.noMoveStart = noMoveStart;
+  @Override
+  public int getId() {
+    return id;
   }
 
 }

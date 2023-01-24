@@ -16,61 +16,60 @@
  * TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.oliveryasuna.vaadin.leaflet.type;
+package com.oliveryasuna.vaadin.leaflet.js;
 
-import com.fasterxml.jackson.annotation.JsonUnwrapped;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 
-import java.io.Serializable;
-
 /**
- * Represents the Leaflet API {@code ZoomPanOptions} type.
+ * Represents the Leaflet API {@code LatLangLiteral} type.
  *
  * @author Oliver Yasuna
  */
-public class LZoomPanOptions implements Serializable {
+public class LLatLngLiteral implements LLatLngExpression {
 
   // Constructors
   //--------------------------------------------------
 
-  public LZoomPanOptions() {
+  public LLatLngLiteral() {
     super();
   }
 
   @Builder
-  public LZoomPanOptions(final LZoomOptions zoomOptions, final LPanOptions panOptions) {
-    this();
+  public LLatLngLiteral(final double lat, final double lng) {
+    super();
 
-    this.zoomOptions = zoomOptions;
-    this.panOptions = panOptions;
+    setLat(lat);
+    setLng(lng);
   }
 
   // Fields
   //--------------------------------------------------
 
-  @JsonUnwrapped
-  private LZoomOptions zoomOptions;
+  @JsonProperty("lat")
+  private double lat;
 
-  @JsonUnwrapped
-  private LPanOptions panOptions;
+  @JsonProperty("lng")
+  private double lng;
+
 
   // Getters/setters
   //--------------------------------------------------
 
-  public LZoomOptions getZoomOptions() {
-    return zoomOptions;
+  public double getLat() {
+    return lat;
   }
 
-  public void setZoomOptions(final LZoomOptions zoomOptions) {
-    this.zoomOptions = zoomOptions;
+  public void setLat(final double lat) {
+    this.lat = lat;
   }
 
-  public LPanOptions getPanOptions() {
-    return panOptions;
+  public double getLng() {
+    return lng;
   }
 
-  public void setPanOptions(final LPanOptions panOptions) {
-    this.panOptions = panOptions;
+  public void setLng(final double lng) {
+    this.lng = lng;
   }
 
 }

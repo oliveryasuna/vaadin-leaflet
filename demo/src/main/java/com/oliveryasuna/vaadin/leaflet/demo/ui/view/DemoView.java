@@ -19,8 +19,8 @@
 package com.oliveryasuna.vaadin.leaflet.demo.ui.view;
 
 import com.oliveryasuna.vaadin.leaflet.Leaflet;
-import com.oliveryasuna.vaadin.leaflet.type.LLatLngTuple;
-import com.oliveryasuna.vaadin.leaflet.type.LMap;
+import com.oliveryasuna.vaadin.leaflet.js.LLatLngTuple;
+import com.oliveryasuna.vaadin.leaflet.js.LMap;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.UI;
@@ -41,10 +41,10 @@ public class DemoView extends Composite<VerticalLayout> {
     mapContainer.setSizeFull();
 
     Leaflet.getInstance().map(UI.getCurrent(), "map")
-        .thenAccept(map -> map.setView(new LLatLngTuple(42.2250837, -71.6016022), 12)
+        .thenAccept(map -> map.setView(new LLatLngTuple(42.2252109, -71.6016015), 12)
             .thenRun(() -> Leaflet.getInstance().tileLayer(map.getUi(), "https://tile.openstreetmap.org/{z}/{x}/{y}.png")
                 .thenAccept(tileLayer -> tileLayer.addTo(map)
-                    .thenRun(() -> Leaflet.getInstance().marker(map.getUi(), new LLatLngTuple(42.2250837, -71.6016022))
+                    .thenRun(() -> Leaflet.getInstance().marker(map.getUi(), new LLatLngTuple(42.2252109, -71.6016015))
                         .thenAccept(marker -> marker.addTo(map))))));
 
     final VerticalLayout content = new VerticalLayout();

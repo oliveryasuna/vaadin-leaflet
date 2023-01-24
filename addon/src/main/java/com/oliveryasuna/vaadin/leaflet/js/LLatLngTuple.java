@@ -16,65 +16,58 @@
  * TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.oliveryasuna.vaadin.leaflet.type;
+package com.oliveryasuna.vaadin.leaflet.js;
 
-import com.vaadin.flow.component.UI;
-
-import java.util.Collections;
-import java.util.Map;
-import java.util.WeakHashMap;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Builder;
 
 /**
- * Represents the Leaflet API {@code TileLayer} type.
+ * Represents the Leaflet API {@code LatLngTuple} type.
  *
  * @author Oliver Yasuna
  */
-public class LTileLayer extends AbstractLGridLayer<LTileLayer> {
-
-  // Static fields
-  //--------------------------------------------------
-
-  public static final String SUPPORT_PROPERTY_NAME = "tileLayer";
-
-  // Static instances
-  //--------------------------------------------------
-
-  protected static final Map<Integer, LTileLayer> STORE = Collections.synchronizedMap(new WeakHashMap<>());
-
-  public static synchronized LTileLayer get(final int id) {
-    return STORE.get(id);
-  }
-
-  public static synchronized LTileLayer createAndStore(final UI ui, final int id) {
-    final LTileLayer tileLayer = new LTileLayer(ui, id);
-
-    STORE.put(id, tileLayer);
-
-    return tileLayer;
-  }
+@JsonFormat(shape = JsonFormat.Shape.ARRAY)
+public class LLatLngTuple implements LLatLngExpression {
 
   // Constructors
   //--------------------------------------------------
 
-  protected LTileLayer(final UI ui, final int id) {
-    super(LTileLayer.class, ui, id);
+  public LLatLngTuple() {
+    super();
   }
 
-  // Methods
+  @Builder
+  public LLatLngTuple(final double lat, final double lng) {
+    this();
+
+    this.lat = lat;
+    this.lng = lng;
+  }
+
+  // Fields
   //--------------------------------------------------
 
-  // TODO: JavaScript properties.
-  //
+  private double lat;
 
-  // TODO: JavaScript methods.
-  //
+  private double lng;
 
-  // Miscellaneous
-  //
+  // Getters/setters
+  //--------------------------------------------------
 
-  @Override
-  public String getSupportPropertyName() {
-    return SUPPORT_PROPERTY_NAME;
+  public double getLat() {
+    return lat;
+  }
+
+  public void setLat(final double lat) {
+    this.lat = lat;
+  }
+
+  public double getLng() {
+    return lng;
+  }
+
+  public void setLng(final double lng) {
+    this.lng = lng;
   }
 
 }

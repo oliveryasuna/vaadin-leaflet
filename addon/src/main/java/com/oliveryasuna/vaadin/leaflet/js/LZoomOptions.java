@@ -16,16 +16,51 @@
  * TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.oliveryasuna.vaadin.leaflet.type;
+package com.oliveryasuna.vaadin.leaflet.js;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Builder;
 
 import java.io.Serializable;
 
 /**
- * Represents the Leaflet API {@code LatLngExpression} type.
+ * Represents the Leaflet API {@code ZoomOptions} type.
  *
  * @author Oliver Yasuna
  */
-// TODO: Any other classes that represent TS intersection types that can be an interface?
-public interface LLatLngExpression extends Serializable {
+public class LZoomOptions implements Serializable {
+
+  // Constructors
+  //--------------------------------------------------
+
+  public LZoomOptions() {
+    super();
+  }
+
+  @Builder
+  public LZoomOptions(final Boolean animate) {
+    this();
+
+    this.animate = animate;
+  }
+
+  // Fields
+  //--------------------------------------------------
+
+  @JsonProperty("animate")
+  @JsonInclude(JsonInclude.Include.NON_NULL)
+  private Boolean animate;
+
+  // Getters/setters
+  //--------------------------------------------------
+
+  public Boolean getAnimate() {
+    return animate;
+  }
+
+  public void setAnimate(final Boolean animate) {
+    this.animate = animate;
+  }
 
 }

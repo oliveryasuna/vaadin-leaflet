@@ -16,58 +16,31 @@
  * TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.oliveryasuna.vaadin.leaflet.type;
+package com.oliveryasuna.vaadin.leaflet.js;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.Builder;
+import com.vaadin.flow.component.UI;
+
+import java.io.Serializable;
+import java.util.concurrent.CompletableFuture;
 
 /**
- * Represents the Leaflet API {@code LatLngTuple} type.
+ * Base class for classes that represent Leaflet API types with callable JavaScript methods.
  *
  * @author Oliver Yasuna
  */
-@JsonFormat(shape = JsonFormat.Shape.ARRAY)
-public class LLatLngTuple implements LLatLngExpression {
+public interface LeafletPojo {
 
-  // Constructors
+  // Methods
   //--------------------------------------------------
 
-  public LLatLngTuple() {
-    super();
-  }
+  <T extends Serializable> CompletableFuture<T> getJsProperty(final Class<T> type, final String propertyName);
 
-  @Builder
-  public LLatLngTuple(final double lat, final double lng) {
-    this();
+  CompletableFuture<?> callJsMethod(final Class<?> returnType, final String methodName, final Serializable... arguments);
 
-    this.lat = lat;
-    this.lng = lng;
-  }
+  CompletableFuture<?> callJsMethodRawArguments(final Class<?> returnType, final String methodName, final String rawArguments);
 
-  // Fields
-  //--------------------------------------------------
+  UI getUi();
 
-  private double lat;
-
-  private double lng;
-
-  // Getters/setters
-  //--------------------------------------------------
-
-  public double getLat() {
-    return lat;
-  }
-
-  public void setLat(final double lat) {
-    this.lat = lat;
-  }
-
-  public double getLng() {
-    return lng;
-  }
-
-  public void setLng(final double lng) {
-    this.lng = lng;
-  }
+  int getId();
 
 }

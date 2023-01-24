@@ -16,51 +16,95 @@
  * TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.oliveryasuna.vaadin.leaflet.type;
+package com.oliveryasuna.vaadin.leaflet.js;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Builder;
+import com.oliveryasuna.vaadin.leaflet.util.SerializationUtils;
+import com.vaadin.flow.component.UI;
+import elemental.json.JsonValue;
 
-import java.io.Serializable;
+import java.util.Collections;
+import java.util.Map;
+import java.util.WeakHashMap;
+import java.util.concurrent.CompletableFuture;
 
 /**
- * Represents the Leaflet API {@code ZoomOptions} type.
+ * Represents the Leaflet API {@code Marker} type.
  *
  * @author Oliver Yasuna
  */
-public class LZoomOptions implements Serializable {
+public class LMarker extends LLayer<LMarker> {
+
+  // Static fields
+  //--------------------------------------------------
+
+  public static final String SUPPORT_PROPERTY_NAME = "marker";
+
+  // Static instances
+  //--------------------------------------------------
+
+  protected static final Map<Integer, LMarker> STORE = Collections.synchronizedMap(new WeakHashMap<>());
+
+  public static synchronized LMarker get(final int id) {
+    return STORE.get(id);
+  }
+
+  public static synchronized LMarker createAndStore(final UI ui, final int id) {
+    final LMarker latLng = new LMarker(ui, id);
+
+    STORE.put(id, latLng);
+
+    return latLng;
+  }
 
   // Constructors
   //--------------------------------------------------
 
-  public LZoomOptions() {
-    super();
+  protected LMarker(final UI ui, final int id) {
+    super(LMarker.class, ui, id);
   }
 
-  @Builder
-  public LZoomOptions(final Boolean animate) {
-    this();
-
-    this.animate = animate;
-  }
-
-  // Fields
+  // Methods
   //--------------------------------------------------
 
-  @JsonProperty("animate")
-  @JsonInclude(JsonInclude.Include.NON_NULL)
-  private Boolean animate;
+  // JavaScript properties
+  //
 
-  // Getters/setters
-  //--------------------------------------------------
+  // TODO: options.
 
-  public Boolean getAnimate() {
-    return animate;
+  // TODO: dragging.
+
+  // TODO: feature.
+
+  // JavaScript methods
+  //
+
+  // TODO: toGeoJSON().
+
+  // TODO: getLatLng().
+
+  public CompletableFuture<LMarker> setLatLng(final LLatLngExpression latLng) {
+    final JsonValue latLngJson = SerializationUtils.toElementalValue(latLng);
+
+    return callJsMethod(JsonValue.class, "setLatLng", latLngJson)
+        .thenApply(ignored -> this);
   }
 
-  public void setAnimate(final Boolean animate) {
-    this.animate = animate;
+  // TODO: setZIndexOffset().
+
+  // TODO: getIcon().
+
+  // TODO: setIcon().
+
+  // TOOD: setOpacity().
+
+  // TODO: getElement().
+
+  // Miscellaneous
+  //
+
+  @Override
+  public String getSupportPropertyName() {
+    return SUPPORT_PROPERTY_NAME;
   }
 
 }

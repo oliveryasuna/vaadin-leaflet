@@ -16,28 +16,61 @@
  * TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.oliveryasuna.vaadin.leaflet.type;
+package com.oliveryasuna.vaadin.leaflet.js;
 
-import com.vaadin.flow.component.UI;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
+import lombok.Builder;
+
+import java.io.Serializable;
 
 /**
- * Represents the Leaflet API {@code GridLayer} type.
+ * Represents the Leaflet API {@code ZoomPanOptions} type.
  *
  * @author Oliver Yasuna
  */
-public abstract class AbstractLGridLayer<T extends AbstractLGridLayer<T>> extends LLayer<T> {
+public class LZoomPanOptions implements Serializable {
 
   // Constructors
   //--------------------------------------------------
 
-  protected AbstractLGridLayer(final Class<T> type, final UI ui, final int id) {
-    super(type, ui, id);
+  public LZoomPanOptions() {
+    super();
   }
 
-  // Methods
+  @Builder
+  public LZoomPanOptions(final LZoomOptions zoomOptions, final LPanOptions panOptions) {
+    this();
+
+    this.zoomOptions = zoomOptions;
+    this.panOptions = panOptions;
+  }
+
+  // Fields
   //--------------------------------------------------
 
-  // TODO: JavaScript functions.
-  //
+  @JsonUnwrapped
+  private LZoomOptions zoomOptions;
+
+  @JsonUnwrapped
+  private LPanOptions panOptions;
+
+  // Getters/setters
+  //--------------------------------------------------
+
+  public LZoomOptions getZoomOptions() {
+    return zoomOptions;
+  }
+
+  public void setZoomOptions(final LZoomOptions zoomOptions) {
+    this.zoomOptions = zoomOptions;
+  }
+
+  public LPanOptions getPanOptions() {
+    return panOptions;
+  }
+
+  public void setPanOptions(final LPanOptions panOptions) {
+    this.panOptions = panOptions;
+  }
 
 }

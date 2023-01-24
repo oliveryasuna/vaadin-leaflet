@@ -16,74 +16,16 @@
  * TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.oliveryasuna.vaadin.leaflet.type;
+package com.oliveryasuna.vaadin.leaflet.js;
 
-import com.vaadin.flow.component.UI;
-import elemental.json.JsonValue;
-
-import java.util.concurrent.CompletableFuture;
+import java.io.Serializable;
 
 /**
- * Represents the Leaflet API {@code Layer} type.
+ * Represents the Leaflet API {@code LatLngExpression} type.
  *
  * @author Oliver Yasuna
  */
-// TODO: extends LEvented?
-public abstract class LLayer<T extends LLayer<T>> implements SupportedLeafletPojo {
-
-  // Constructors
-  //--------------------------------------------------
-
-  protected LLayer(final Class<T> type, final UI ui, final int id) {
-    super();
-
-    this.type = type;
-
-    this.ui = ui;
-    this.id = id;
-  }
-
-  // TODO: JavaScript constructors.
-
-  // Fields
-  //--------------------------------------------------
-
-  private final Class<T> type;
-
-  private final UI ui;
-
-  private final int id;
-
-  // Methods
-  //--------------------------------------------------
-
-  // JavaScript methods
-  //
-
-  public CompletableFuture<T> addTo(final LMap map) {
-    return callJsMethodRawArguments(JsonValue.class, "addTo", SupportedLeafletPojo.buildJsStoreGetExpression(map))
-        .thenApply(ignored -> getType().cast(this));
-  }
-
-  // TODO: addTo(LayerGroup).
-
-  // TODO: More methods.
-
-  // Getters/setters
-  //--------------------------------------------------
-
-  public Class<T> getType() {
-    return type;
-  }
-
-  @Override
-  public UI getUi() {
-    return ui;
-  }
-
-  @Override
-  public int getId() {
-    return id;
-  }
+// TODO: Any other classes that represent TS intersection types that can be an interface?
+public interface LLatLngExpression extends Serializable {
 
 }

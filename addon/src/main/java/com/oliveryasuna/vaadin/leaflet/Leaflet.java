@@ -18,7 +18,7 @@
 
 package com.oliveryasuna.vaadin.leaflet;
 
-import com.oliveryasuna.vaadin.leaflet.type.*;
+import com.oliveryasuna.vaadin.leaflet.js.*;
 import com.oliveryasuna.vaadin.leaflet.util.FrontendUtils;
 import com.oliveryasuna.vaadin.leaflet.util.SerializationUtils;
 import com.vaadin.flow.component.UI;

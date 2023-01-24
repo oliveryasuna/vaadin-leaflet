@@ -16,59 +16,28 @@
  * TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.oliveryasuna.vaadin.leaflet.type;
+package com.oliveryasuna.vaadin.leaflet.js;
 
 import com.vaadin.flow.component.UI;
-
-import java.util.Collections;
-import java.util.Map;
-import java.util.WeakHashMap;
 
 /**
  * Represents the Leaflet API {@code GridLayer} type.
  *
  * @author Oliver Yasuna
  */
-public class LGridLayer extends AbstractLGridLayer<LGridLayer> {
-
-  // Static fields
-  //--------------------------------------------------
-
-  public static final String SUPPORT_PROPERTY_NAME = "gridLayer";
-
-  // Static instances
-  //--------------------------------------------------
-
-  protected static final Map<Integer, LGridLayer> STORE = Collections.synchronizedMap(new WeakHashMap<>());
-
-  public static synchronized LGridLayer get(final int id) {
-    return STORE.get(id);
-  }
-
-  public static synchronized LGridLayer createAndStore(final UI ui, final int id) {
-    final LGridLayer gridLayer = new LGridLayer(ui, id);
-
-    STORE.put(id, gridLayer);
-
-    return gridLayer;
-  }
+public abstract class AbstractLGridLayer<T extends AbstractLGridLayer<T>> extends LLayer<T> {
 
   // Constructors
   //--------------------------------------------------
 
-  protected LGridLayer(final UI ui, final int id) {
-    super(LGridLayer.class, ui, id);
+  protected AbstractLGridLayer(final Class<T> type, final UI ui, final int id) {
+    super(type, ui, id);
   }
 
   // Methods
   //--------------------------------------------------
 
-  // Miscellaneous
+  // TODO: JavaScript functions.
   //
-
-  @Override
-  public final String getSupportPropertyName() {
-    return SUPPORT_PROPERTY_NAME;
-  }
 
 }

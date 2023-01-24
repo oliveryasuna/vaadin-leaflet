@@ -16,60 +16,90 @@
  * TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.oliveryasuna.vaadin.leaflet.type;
+package com.oliveryasuna.vaadin.leaflet.js;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 
+import java.io.Serializable;
+
 /**
- * Represents the Leaflet API {@code LatLangLiteral} type.
+ * Represents the Leaflet API {@code PanOptions} type.
  *
  * @author Oliver Yasuna
  */
-public class LLatLngLiteral implements LLatLngExpression {
+public class LPanOptions implements Serializable {
 
   // Constructors
   //--------------------------------------------------
 
-  public LLatLngLiteral() {
+  public LPanOptions() {
     super();
   }
 
   @Builder
-  public LLatLngLiteral(final double lat, final double lng) {
-    super();
+  public LPanOptions(final Boolean animate, final Double duration, final Double easeLinearity, final Boolean noMoveStart) {
+    this();
 
-    setLat(lat);
-    setLng(lng);
+    this.animate = animate;
+    this.duration = duration;
+    this.easeLinearity = easeLinearity;
+    this.noMoveStart = noMoveStart;
   }
 
   // Fields
   //--------------------------------------------------
 
-  @JsonProperty("lat")
-  private double lat;
+  @JsonProperty("animate")
+  @JsonInclude(JsonInclude.Include.NON_NULL)
+  private Boolean animate;
 
-  @JsonProperty("lng")
-  private double lng;
+  @JsonProperty("duration")
+  @JsonInclude(JsonInclude.Include.NON_NULL)
+  private Double duration;
 
+  @JsonProperty("easeLinearity")
+  @JsonInclude(JsonInclude.Include.NON_NULL)
+  private Double easeLinearity;
+
+  @JsonProperty("noMoveStart")
+  @JsonInclude(JsonInclude.Include.NON_NULL)
+  private Boolean noMoveStart;
 
   // Getters/setters
   //--------------------------------------------------
 
-  public double getLat() {
-    return lat;
+  public Boolean getAnimate() {
+    return animate;
   }
 
-  public void setLat(final double lat) {
-    this.lat = lat;
+  public void setAnimate(final Boolean animate) {
+    this.animate = animate;
   }
 
-  public double getLng() {
-    return lng;
+  public Double getDuration() {
+    return duration;
   }
 
-  public void setLng(final double lng) {
-    this.lng = lng;
+  public void setDuration(final Double duration) {
+    this.duration = duration;
+  }
+
+  public Double getEaseLinearity() {
+    return easeLinearity;
+  }
+
+  public void setEaseLinearity(final Double easeLinearity) {
+    this.easeLinearity = easeLinearity;
+  }
+
+  public Boolean getNoMoveStart() {
+    return noMoveStart;
+  }
+
+  public void setNoMoveStart(final Boolean noMoveStart) {
+    this.noMoveStart = noMoveStart;
   }
 
 }
