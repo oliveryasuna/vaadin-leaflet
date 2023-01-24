@@ -31,7 +31,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 
 @Route("")
-@JsModule("./src/vaadin-leaflet-addon.ts")
+@JsModule("./src/support/vaadin-leaflet-addon.ts")
 public class DemoView extends Composite<VerticalLayout> {
 
   @Override
