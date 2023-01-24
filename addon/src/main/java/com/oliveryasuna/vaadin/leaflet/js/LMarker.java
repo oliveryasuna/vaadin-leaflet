@@ -95,7 +95,7 @@ public class LMarker extends LLayer<LMarker> {
 
   // TODO: setIcon().
 
-  // TOOD: setOpacity().
+  // TODO: setOpacity().
 
   // TODO: getElement().
 
