@@ -85,6 +85,11 @@ public class LMap implements SupportedLeafletPojo {
 
   // TODO: Many more methods.
 
+  public CompletableFuture<LMap> addLayer(final LLayer<?> layer) {
+    return callJsMethodRawArguments(null, "addLayer", SupportedLeafletPojo.buildJsStoreGetExpression(layer))
+        .thenApply(ignored -> this);
+  }
+
   public CompletableFuture<LMap> setView(final LLatLngExpression center) {
     final JsonValue centerJson = SerializationUtils.toElementalValue(center);
 
